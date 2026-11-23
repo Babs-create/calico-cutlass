@@ -184,7 +184,7 @@ chunk('vault',['....................','..........l.........','.........===......
 chunk('pillars',['............v.......','.....c....c....c....','....................','..............##....','.........##...##....','....##...##...##....','##..##...##...##..##','##..##...##...##..##','##..##...##...##..##']);
 chunk('zigzag',['..........g.........','.........===........','..............s.....','......===....===....','....................','....................','...===..........===.','....................','..........e.........',...G3]);
 chunk('gantry',['..........v.........','....................','..c.c.c.c.c.c.c.c...','.H.CCCCCCCCCCCCCC.H.','.H................H.','.H................H.','.H................H.','.H..^^^^^^^^^^^^..H.',...G3]);
-chunk('hill',['....................','....############....','.cc.#.g.g.l.g.g#.cc.','.==.#..........#.==.','....W..........#..e.','....W..x....n..#....',...G3],[[4,8,11,4]]);
+chunk('hill',['....................','....############....','..cc#.g.g.l.g.g#cc..','..==#..........#==..','....W..........#..e.','....W..x....n..#....',...G3],[[4,8,11,4]]);
 chunk('cellar',['.....c.c.c.c..e.....','..######FF########..','..##....gHg.n...##..','####..g..H..g.a.####','####....gHg.....####','####################'],[[4,11,12,3]]);
 chunk('springs',['....c.g.c.....c.g.c.','....................','...=====......=====.','....................','....................','........=====.......','....................','....................','.J.....e.......J....',...G3]);
 chunk('brig',['......c.c.c.........','....................','....................','..t..e....K...r..t..',...G3]);
@@ -1254,7 +1254,7 @@ function updatePlayer(dt){
     if(p.vy>=0){for(const pl of plats){if(p.x+p.w>pl.x+2&&p.x<pl.x+pl.w-2&&prevBottom<=pl.prevY+3&&p.y+p.h>=pl.y){p.y=pl.y-p.h;p.vy=0;p.onGround=true;p.ride=pl;p.groundTile=9}}}
   }
   if(!p.climb&&p.onGround&&p.groundTile===7&&keys.down&&p.drop<=0){p.drop=.3;p.y+=3;p.onGround=false}
-  if(!p.climb&&p.vy>=0)for(const sp of springs){if(ov(p,sp)&&prevBottom<=sp.y+9){p.y=sp.y-p.h;p.vy=cat?-1150:-1000;p.bounce=true;p.onGround=false;p.coyote=0;sp.sq=.25;SFX.boing();for(let i=0;i<5;i++)part({x:sp.x+14,y:sp.y,vx:rand(-80,80),vy:rand(-60,0),life:.3,max:.3,col:'rgba(255,255,255,.7)',size:3})}}
+  if(!p.climb&&p.vy>=0)for(const sp of springs){if(ov(p,sp)&&(prevBottom<=sp.y+9||p.onGround)){if(keys.down){p.y=sp.y-p.h;p.vy=0;p.onGround=true;p.coyote=.1;continue}p.y=sp.y-p.h;p.vy=cat?-1150:-1000;p.bounce=true;p.onGround=false;p.coyote=0;sp.sq=.25;SFX.boing();sp.streak=(sp.lastT!=null&&gt-sp.lastT<2.2)?(sp.streak||0)+1:1;sp.lastT=gt;if(sp.streak===3)popup(sp.x+14,sp.y-80,'Hold DOWN to stop bouncing','#ffe9c4');for(let i=0;i<5;i++)part({x:sp.x+14,y:sp.y,vx:rand(-80,80),vy:rand(-60,0),life:.3,max:.3,col:'rgba(255,255,255,.7)',size:3})}}
   if(arena.active&&p.x<arena.x+2){p.x=arena.x+2;if(p.vx<0)p.vx=0}
   // crumble
   if(p.onGround&&p.groundTile===5){const l=Math.floor(p.x/T),r=Math.floor((p.x+p.w-.01)/T);for(let tx=l;tx<=r;tx++){const k=lvl.crumble.get(p.gty*lvl.w+tx);if(k&&k.state==='solid'){k.state='shake';k.t=.45}}}
