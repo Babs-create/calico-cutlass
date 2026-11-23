@@ -205,7 +205,7 @@ chunk('crabride',['......c.c.c.c.c.....','....................','.m....e..^^^..r
 chunk('gale',['.....c.c.....c.c....','....................','....===......===....','....................','..r.......a......e..','#####....#####...###','#####....#####...###','#####....#####...###']);
 chunk('wrecks',['..........g.........','.........===........','....c.c........c.c..','...=====....=====...','....................','.b....##.....s...x..','#####.##..##########',...G3]);
 chunk('dbl_climb',['....................','.............$......','...........======H..','.................H..','.................H..','..........CC.....H..','....................','....................','.......CC...........','....................','....................','....CC..............','###^^^^^^^^^^^^^^###','####################','####################']);
-chunk('dbl_wall',['....................','....................','....................','....................','......##########....','......#........#....','......#.......$#....','......#....CC==#....','......#........#....','......#.CC.....#....','......W........#....','......W.^^^^^^^#....',...G3]);
+chunk('dbl_wall',['....................','....................','....................','....................','....................','....................','....................','......##########....','...==.#........#....','......#......$.#....','.==...W...CC===#....','......W.^^^^^^^#....',...G3]);
 chunk('dbl_spring',['....................','....................','....................','.......$............','......===...........','....................','....................','...............v....','....................','....................','....................','...J................',...G3]);
 chunk('dbl_reef',['####################','####################','###.....e........###','###^^^^......^^^^###','###......$.......###','###^^^^......^^^^###','###.......r......###','###..............###','#####...####...#####','....................','....................','....................',...G3]);
 chunk('rushgate',['....................','....................','....................','....................','..@.................',...G3]);
@@ -281,7 +281,10 @@ const LEVELS=[
   chunks:['start','gale','hill','lagoon','check','springs','gale','lagoon','check','reefB~w','abyss~w','reefA~w','check~w','abyss~w','reefB~w','crabride','cellar','check','crabride','gale','wrecks','gauntlet','prebuss','boss']},
  {name:'Thunderhead Peak',theme:'thunderhead',tex:'snow',bgt:'storm',storm:true,magic:'random',boss:'squallfinal',song:18,
   blurb:'Squall fixed his bell. Ride the dark mine carts up through the mountain and stop the storm for good!',
-  chunks:['start','gale','hill','tower','check','gale','zigzag','check','minecart~d','minecart~d','check~d','walls~d','minecart~d','ladders~d','minecart~d','cellar','check','gale','gantry','springs','check','gale','pillars','wrecks','gale','prebuss','boss']}
+  chunks:['start','gale','hill','tower','check','gale','zigzag','check','minecart~d','minecart~d','check~d','walls~d','minecart~d','ladders~d','minecart~d','cellar','check','gale','gantry','springs','check','gale','pillars','wrecks','gale','prebuss','boss']},
+ {name:'The Isle in the Mist',theme:'ghost',storm:true,mist:true,magic:'random',boss:'mistbeard',song:11,
+  blurb:'Thick fog hides everything past your whiskers. Raise the checkpoint lanterns, ride the dark carts, and find who is hiding here.',
+  chunks:['start','hill','wrecks','check','ropes','lagoon','check','zigzag','minecart~d','ladders~d','check~d','walls~d','cellar','check','reefB~w','abyss~w','check~w','reefA~w','crabride','check','pillars','gauntlet','prebuss','boss']}
 ];
 LEVELS.forEach(L=>{if(!L.chunks.includes('hill')){L.chunks.splice(2,0,'hill');L.chunks.splice(Math.floor(L.chunks.length*.66),0,'cellar')}if(L.bonus||L.storm)return;L.chunks.splice(Math.floor(L.chunks.length*.45),0,'brig')});
 const EXTRA_NEW=[['ropes','chase','walls','cannon'],['river','zipline','chase','walls','ropes'],['cannon','zipline','beach'],['river','cannon','walls','beach']];
@@ -348,6 +351,7 @@ const BOSSES={
  drizzle:{name:'Bosun Drizzle',kind:'rat',w:44,h:60,hp:62,s:1.85,coat:'#2a4a6a',fur:'#8a96a0',hat:'tricorn',beard:true,patterns:['knives','gust','leap','summon','charge','bolt'],cspd:470,walk:90,cdmg:18},
  galeeel:{name:'The Great Storm Eel',kind:'eel',w:70,h:40,hp:72,s:1,cdmg:16,patterns:['lunge','zap','spit','zap','lunge','spit']},
  brinewhisker:{name:'Captain Brinewhisker',kind:'rat',w:46,h:62,hp:84,s:1.9,coat:'#1a5a5a',fur:'#9aa4a8',hat:'tricorn',beard:true,patterns:['knives','gust','leap','summon','charge','bolt'],cspd:480,walk:95,cdmg:19},
+ mistbeard:{name:'Mistbeard the Drowned',kind:'dog',w:62,h:88,hp:96,s:2.0,coat:'#24443f',fur:'#b8d4cc',hat:'tricorn',weapon:'club',ghost:true,patterns:['vanish','spread','knives','vanish','lob','slam','summon'],cspd:460,walk:64,cdmg:22},
  squallfinal:{name:'Squall, Storm Unleashed',kind:'dog',w:66,h:94,hp:104,s:2.15,coat:'#1a2440',fur:'#d0c8b8',hat:'bicorne',weapon:'bell',patterns:['spread','gust','bolt','charge','lob','bolt','slam','summon','knives'],cspd:480,walk:66,cdmg:24},
  squall:{name:'Admiral Squall',kind:'dog',w:64,h:90,hp:86,s:2.05,coat:'#2a3a5a',fur:'#d0c8b8',hat:'bicorne',weapon:'bell',patterns:['spread','gust','bolt','charge','lob','bolt','slam','summon'],cspd:460,walk:62,cdmg:22},
  blackjowl:{name:'Lord Blackjowl',kind:'dog',w:60,h:84,hp:60,s:1.9,coat:'#1d1b22',fur:'#5a4638',hat:'helm',weapon:'club',patterns:['spread','lob','charge','knives','slam','summon'],cspd:430,walk:60,cdmg:20}
@@ -906,9 +910,12 @@ function drawTurtle(g,x,y,face,t,ridden){g.save();g.translate(x+48,y+6+Math.sin(
 function drawBrazier(g,x,y,lit,t){g.fillStyle='#4a423a';g.fillRect(x+10,y-30,12,30);g.fillStyle='#6a625a';ell(g,x+16,y-32,16,5);g.fillStyle='#2a2622';ell(g,x+16,y-33,12,3);if(lit){const f=Math.sin(t*14+x)*2;g.fillStyle='#ff7a1a';ell(g,x+16,y-42,9+f*.3,12+f);g.fillStyle='#ffd25a';ell(g,x+16,y-39,5,7+f*.5)}else{g.fillStyle='#555';ell(g,x+12,y-34,3,1.5);ell(g,x+19,y-34,3,1.5)}}
 function drawDark(g){
   if(!window.__darkC){window.__darkC=document.createElement('canvas');__darkC.width=W;__darkC.height=H}
-  const d=__darkC.getContext('2d');d.globalCompositeOperation='source-over';d.clearRect(0,0,W,H);d.fillStyle='rgba(3,2,6,.96)';d.fillRect(0,0,W,H);d.globalCompositeOperation='destination-out';
+  const d=__darkC.getContext('2d');d.globalCompositeOperation='source-over';d.clearRect(0,0,W,H);
+  const MI=!!lvl.def.mist,mf=MI?Math.min(1,lvl.darkF):1,lerp=(a,b)=>a+(b-a)*mf;const ma=MI&&arena.active&&mf<.5?.6:1;
+  d.fillStyle=MI?`rgba(${lerp(158,3)|0},${lerp(176,2)|0},${lerp(174,6)|0},${lerp(.9*ma,.96)})`:'rgba(3,2,6,.96)';d.fillRect(0,0,W,H);d.globalCompositeOperation='destination-out';
+  const pr=MI?lerp(EZ()?250:215,150):150;
   const hole=(x,y,r)=>{if(x<-r||x>W+r||y<-r||y>H+r)return;const gr=d.createRadialGradient(x,y,r*.25,x,y,r);gr.addColorStop(0,'rgba(0,0,0,1)');gr.addColorStop(1,'rgba(0,0,0,0)');d.fillStyle=gr;d.beginPath();d.arc(x,y,r,0,7);d.fill()};
-  if(P)hole(P.x+P.w/2-camX,P.y+P.h/2-camY,(EZ()?190:150)+(save.equip.hat==='hat_lantern'?90:0)+Math.sin(gt*9)*5);
+  if(P)hole(P.x+P.w/2-camX,P.y+P.h/2-camY,(MI?pr:(EZ()?190:150))+(save.equip.hat==='hat_lantern'?90:0)+Math.sin(gt*9)*5);
   if(P2)hole(P2.x+P2.w/2-camX,P2.y+P2.h/2-camY,(EZ()?190:150)+Math.sin(gt*9+2)*5);
   for(const t of torches)hole(t.x-camX,t.y-44-camY,110);
   for(const f of flags)hole(f.x+16-camX,f.y-40-camY,f.up?135:34);
@@ -917,7 +924,8 @@ function drawDark(g){
   for(const c of carts)hole(c.x+48-camX,c.y+4-camY,95);
   if(boss&&!boss.dead)hole(boss.x+boss.w/2-camX,boss.y+10-camY,boss.lamp?130:70);
   for(const e of enemies)if(e.type==='musk'&&e.aim>0)hole(e.x+e.w/2-camX,e.y-camY,40);
-  d.globalCompositeOperation='source-over';g.globalAlpha=lvl.def.dark?1:Math.min(1,lvl.darkF);g.drawImage(__darkC,0,0,W,H);g.globalAlpha=1;
+  if(MI&&mf<.5)for(const e of enemies)if(!e.dead&&(e.aim>0||e.state==='windup'))hole(e.x+e.w/2-camX,e.y+e.h/2-camY,46);
+  d.globalCompositeOperation='source-over';g.globalAlpha=(lvl.def.dark||MI)?1:Math.min(1,lvl.darkF);g.drawImage(__darkC,0,0,W,H);g.globalAlpha=1;
 }
 function drawTorch(g,x,y,t){g.fillStyle='#4a2c16';g.fillRect(x-2,y-30,5,30);g.fillStyle='#2b2b30';g.fillRect(x-5,y-34,11,5);const f=Math.sin(t*20+x)*1.5;g.fillStyle='rgba(255,170,60,.18)';ell(g,x,y-44,22,22);g.fillStyle='#ff7a1a';ell(g,x,y-41,5+f*.3,9+f);g.fillStyle='#ffd25a';ell(g,x,y-39,2.8,5+f*.5)}
 function drawFlag(g,f,t){
@@ -935,6 +943,7 @@ function drawPickup(g,p,t){
     case 'doubloon':drawDoubloon(g,t,1.15);break;
     case 'coin':{const sx=Math.abs(Math.cos(t*4+p.x));g.scale(Math.max(.15,sx),1);g.fillStyle='#b8860b';ell(g,0,0,8,8);g.fillStyle='#f2c230';ell(g,0,0,6.5,6.5);g.fillStyle='#ffe58a';ell(g,-2,-2,2,2);g.fillStyle='#b8860b';g.font='bold 9px serif';g.textAlign='center';g.textBaseline='middle';g.fillText('9',0,1);break}
     case 'gem':{g.fillStyle=p.col;g.beginPath();g.moveTo(0,-9);g.lineTo(8,-2);g.lineTo(0,9);g.lineTo(-8,-2);g.closePath();g.fill();g.fillStyle='rgba(255,255,255,.55)';tri(g,0,-9,-8,-2,0,-2);g.fillStyle='rgba(0,0,0,.2)';tri(g,0,9,8,-2,0,-2);if(Math.sin(t*5+p.x)>.8){g.fillStyle='#fff';ell(g,-3,-4,1.5,1.5)}break}
+    case 'vial':{g.fillStyle=`rgba(150,255,150,${.18+.1*Math.sin(t*5)})`;ell(g,0,0,13,13);drawVial(g,0,2,1.2);break}
     case 'ammo':{g.fillStyle='#6b4420';rr(g,-9,-6,18,13,3);g.fill();g.fillStyle='#c9a227';for(let i=0;i<3;i++){g.fillRect(-6+i*5,-10,3,6);ell(g,-4.5+i*5,-10,1.5,1.5)}g.fillStyle='#f2e6c4';g.font='bold 8px sans-serif';g.textAlign='center';g.fillText('5',0,4);break}
     case 'health':{g.fillStyle='#5f8fb5';g.beginPath();g.ellipse(0,0,10,5.5,0,0,7);g.fill();tri(g,8,0,15,-6,15,6);g.fillStyle='#bfe0f2';ell(g,-2,1.5,6,2.2);g.fillStyle='#111';ell(g,-6,-1.5,1.1,1.1);break}
     case 'catnip':{g.strokeStyle='#2f7a2a';g.lineWidth=2;ln(g,0,9,0,-6);g.fillStyle='#56b03a';ell(g,-5,-2,5,2.6,-.5);ell(g,5,-4,5,2.6,.5);ell(g,0,-8,2.6,4.5);g.fillStyle='#b48ae0';ell(g,0,-11,2,2);if(Math.sin(t*6)>0){g.fillStyle='#fff';ell(g,7,-9,1.2,1.2)}break}
@@ -967,7 +976,7 @@ function buildLevel(idx,dov){
   const wetR=[],darkR=[],wetCols=[];
   def.chunks.forEach(n0=>{const sp=n0.split('~'),n=sp[0],fl=sp[1];const ch=CH[n];const w=Math.max(...ch.map(r=>r.length));const c0=rows[0].length;if(fl==='w'){wetR.push([c0*T,(c0+w)*T]);for(let k=c0;k<c0+w;k++)wetCols[k]=1}if(fl==='d')darkR.push([c0*T,(c0+w)*T]);if(n==='boss')arenaCol=c0;else chunkStarts&&chunkStarts.push(c0);for(const cv of CHC[n])covers.push({tx:c0+cv[0],ty:cv[1],tw:cv[2],th:cv[3],x:(c0+cv[0])*T,y:cv[1]*T,w:cv[2]*T,h:cv[3]*T,a:1,found:false});for(let y=0;y<15;y++)rows[y]+=(ch[y]||'').padEnd(w,'.')});
   const w=rows[0].length,h=15;
-  lvl={idx,def,w,h,t:[],covers,fakes:[],crumble:new Map(),tex:getTex(def.tex||def.theme),bg:getBG(def.bgt||def.theme),info:THEME_INFO[def.theme],wetR,darkR,darkF:def.dark?1:0};resetStorm();lvl.plague=!!(save.plague&&idx<NCH&&!dov&&!TR);lvl.bones=[];
+  lvl={idx,def,w,h,t:[],covers,fakes:[],crumble:new Map(),tex:getTex(def.tex||def.theme),bg:getBG(def.bgt||def.theme),info:THEME_INFO[def.theme],wetR,darkR,darkF:def.dark?1:0};resetStorm();lvl.plague=!!(save.plague&&idx<NCH&&!dov&&!TR);lvl.bones=[];lvl.vials=lvl.plague?3:0;lvl.cured=[];lvl.curedN=0;
   enemies=[];pBul=[];eBul=[];pickups=[];barrels=[];crates=[];flags=[];plats=[];parts=[];torches=[];springs=[];cages=[];signs=[];vents=[];carts=[];mounts=[];ropes=[];const cartStops=[];zips=[];cannons=[];chases=[];boulder=null;boss=null;pipT=4;let zipStart=null;const dEnds=[];
   arena={active:false,done:false,x:arenaCol*T,bossSpawn:null};
   let start={x:64,y:384};
@@ -983,7 +992,7 @@ function buildLevel(idx,dov){
       case '@':start={x:px+5,y:py+T};break;
       case 'c':addPickup('coin',px+6,py+6);break;
       case 'g':addPickup('gem',px+6,py+6);break;
-      case 'a':addPickup('ammo',px+6,py+10);break;
+      case 'a':addPickup(lvl.plague&&(x+y)%2?'vial':'ammo',px+6,py+10);break;
       case 'h':if(!(lvl.plague&&(x+y)%2))addPickup('health',px+6,py+10);break;
       case 'n':addPickup('catnip',px+6,py+8);break;
       case 'l':addPickup('life',px+6,py+6);break;
@@ -1104,7 +1113,7 @@ function killEnemy(e,dir){
   const r=Math.random();
   if(r<.3||crewHas('penny'))drop('coin',e);if(r>=.3&&r<.42)drop('ammo',e);else if(r>=.42&&r<.5)drop('health',e);else if(r>=.5&&r<.55)drop('gem',e);
 }
-function drop(type,o){const p=addPickup(type,o.x+o.w/2-10,o.y+o.h/2-10,true);p.vy=-300;p.vx=rand(-80,80);return p}
+function drop(type,o){if(type==='ammo'&&lvl&&lvl.plague&&Math.random()<.5)type='vial';const p=addPickup(type,o.x+o.w/2-10,o.y+o.h/2-10,true);p.vy=-300;p.vx=rand(-80,80);return p}
 function breakCrate(c){
   if(c.dead)return;c.dead=true;SFX.crate();
   for(let i=0;i<8;i++)part({type:'debris',x:c.x+15,y:c.y+15,vx:rand(-200,200),vy:rand(-380,-120),g:1200,life:1,max:1,col:'#b07a3e',size:rand(4,8),rot:Math.random()*6,vr:rand(-10,10)});
@@ -1113,7 +1122,7 @@ function breakCrate(c){
   if(r<.35||crewHas('tinker'))drop('gem',c);if(r>=.35&&r<.55)drop('ammo',c);else if(r>=.55&&r<.65)drop('health',c);
 }
 function hurtBoss(dmg,src){
-  const b=boss;if(!b||b.dead||b.state==='intro'||b.ifr>0)return false;
+  const b=boss;if(!b||b.dead||b.state==='intro'||b.ifr>0||b.vanish===1)return false;
   if(b.kind==='eel'&&b.state==='tired')dmg*=1.5;b.hp-=dmg;b.ifr=src==='melee'?.05:.12;b.flash=.12;SFX.bossHit();burst(b.x+b.w/2,b.y+b.h/2,8,'#fff',220,{g:0});
   if(b.hp<=0){b.hp=0;b.dead=true;bossFails[lvlIdx]=0;b.st=2.2;b.vx=0;addScore(5000,b.x+b.w/2,b.y);shake=12;SFX.boom();enemies.forEach(e=>{if(e.summoned&&!e.dead)killEnemy(e,1)});eBul=[]}
   return true;
@@ -1286,7 +1295,8 @@ function updatePlayer(dt){
   }
   // shoot
   if(hit('shoot')&&!p.climb&&!p.inCannon&&!p.carry&&p.shootCd<=0&&p.hurtT<=0){
-    if(p.ammo>0){p.ammo--;p.shoot=.22;p.shootCd=cat?.18:.32;SFX.shoot();pBul.push({kind:'bullet',x:cx+p.face*24,y:p.y+16,vx:p.face*640,vy:0,r:3.5,dmg:2,life:1.2,hits:new Set(),t:0});smoke(cx+p.face*28,p.y+16,3,'rgba(220,220,220,.5)')}
+    if(lvl.plague&&lvl.vials>0&&!wetAt(p)){lvl.vials--;p.shoot=.22;p.shootCd=.42;SFX.throw();const up=keys.up?1:0,dn=keys.down?1:0;pBul.push({kind:'vial',x:cx+p.face*12,y:p.y+18,vx:p.face*(dn?170:up?260:380)+p.vx*.35,vy:dn?-160:up?-640:-300,g:1300,r:6,dmg:0,life:3,hits:new Set(),t:0})}
+    else if(p.ammo>0){p.ammo--;p.shoot=.22;p.shootCd=cat?.18:.32;SFX.shoot();pBul.push({kind:'bullet',x:cx+p.face*24,y:p.y+16,vx:p.face*640,vy:0,r:3.5,dmg:2,life:1.2,hits:new Set(),t:0});smoke(cx+p.face*28,p.y+16,3,'rgba(220,220,220,.5)')}
     else{SFX.click();popup(cx,p.y-6,'No ammo','#ccc');p.shootCd=.3}
   }
   // grab / throw
@@ -1325,7 +1335,7 @@ function respawn(){
   for(const c of carts){c.x=c.x0;c.y=c.y0;c.vx=c.vy=0;c.riding=false;c.done=false}
   for(const m of mounts){m.x=m.x0;m.y=m.y0;m.hp=3;m.free=true;m.dead=false}
   const keepAmmo=Math.max(P.ammo,crewHas('gus')?15:5);
-  P=newPlayer(checkpoint.x,checkpoint.y-42);P.ammo=keepAmmo;P.invuln=2;
+  P=newPlayer(checkpoint.x,checkpoint.y-42);P.ammo=keepAmmo;P.invuln=2;if(lvl.plague)lvl.vials=Math.max(lvl.vials,2);
   eBul=[];
   if(arena.active&&!arena.done){arena.active=false;boss=null;enemies=enemies.filter(e=>!e.summoned);barrels.forEach(b=>{if(b.arena){b.dead=false;b.x=b.sx;b.y=b.sy;b.vx=b.vy=0;b.fuse=-1;b.thrown=false;b.carried=false}})}
   camX=clamp(P.x-W/2,0,lvl.w*T-W);
@@ -1427,6 +1437,7 @@ function nextPattern(b){
     case 'lob':b.state='act';b.acts=[[.4,lob],[.7,lob],[1,lob]].concat(enr?[[1.3,lob],[1.6,null]]:[[1.4,null]]);break;
     case 'summon':{const n=enemies.filter(e=>e.summoned&&!e.dead).length;if(n>=2){b.state='idle';b.st=.3;return}b.state='act';b.acts=[[.5,()=>{const ac=arena.x/T;spawnEnemy('rat',ac+1,10,{summoned:true,face:1,state:'chase'});spawnEnemy('rat',ac+22,10,{summoned:true,face:-1,state:'chase'});SFX.flag()}],[1,null]];break}
     case 'charge':b.state='wind';b.st=.6;break;
+    case 'vanish':{b.state='act';b.acts=[[.05,()=>{b.vanish=1;smoke(bcx,b.y+b.h/2,14,'rgba(205,228,222,.75)');tone(620,.5,'sine',.05,-420)}],[.8,()=>{const side=Math.random()<.5?-1:1;let nx=P.x+P.w/2+side*150-b.w/2;if(nx<arena.x+T||nx>arena.x+23*T-b.w)nx=P.x+P.w/2-side*150-b.w/2;b.x=clamp(nx,arena.x+T,arena.x+23*T-b.w);b.vanish=2;b.face=Math.sign(P.x+P.w/2-(b.x+b.w/2))||1;smoke(b.x+b.w/2,b.y+b.h/2,10,'rgba(205,228,222,.6)');tone(300,.35,'sine',.05,500)}],[1.25,()=>{b.vanish=0;knife()}],[1.55,()=>{if(enr)knife()}],[1.85,null]];break}
     case 'gust':b.state='act';b.acts=[[.45,()=>{const d=Math.sign((P.x+P.w/2)-bcx)||1;STM.boss={dir:d,t:enr?2.4:1.8,str:EZ()?190:260};tone(160,1,'sawtooth',.04,-80);for(let i=0;i<16;i++)part({x:bcx,y:b.y+rand(10,b.h),vx:d*rand(300,520),vy:rand(-40,40),life:.6,max:.6,col:'rgba(220,235,255,.7)',size:rand(2,4)})}],[1.15,()=>{if(enr)knife()}],[1.7,null]];break;
     case 'bolt':{b.state='act';const n=enr?4:3;b.acts=[];for(let k=0;k<n;k++)b.acts.push([.35+k*.45,()=>strikeNear(P,k===0?0:rand(-70,70))]);b.acts.push([.35+n*.45+.4,null]);break}
     case 'slam':case 'leap':{const target=p==='slam'?pcx:(arena.x+(bcx<arena.x+400?rand(520,700):rand(100,280)));const tt=.9;b.vx=(target-bcx)/tt;b.vy=-GR*tt*.5;b.state='air';b.slam=p==='slam';b.onGround=false;SFX.jump();break}
@@ -1450,7 +1461,7 @@ function updateBoss(dt){
   const wasAir=!b.onGround;
   moveBody(b,dt);
   if(b.x<arena.x+4){b.x=arena.x+4;if(b.vx<0)b.hitWall=-1;if(b.state==='air')b.vx=0}
-  if(b.state!=='intro'&&b.state!=='stun'&&!P.dead&&ov(b,P))hurtPlayer(b.cdmg,Math.sign(dx)||1);
+  if(b.state!=='intro'&&b.state!=='stun'&&!b.vanish&&!P.dead&&ov(b,P))hurtPlayer(b.cdmg,Math.sign(dx)||1);
 }
 
 /* ---------- world update ---------- */
@@ -1467,7 +1478,7 @@ function updateWorld(dt){
   // arena
   updateBones(dt);
   if(!arena.active&&!arena.done&&arena.bossSpawn){const tr=allP().find(pl=>!pl.dead&&pl.x>arena.x+3*T);if(tr){arena.active=true;spawnBoss();SFX.flag();for(const o of allP())if(o!==tr&&!o.dead&&o.x<arena.x+2*T)pullTo(o,tr)}}
-  if(boss){const b0=boss;const tg=nearestP(b0.x+b0.w/2,b0.y+b0.h/2);asPlayer(tg,()=>updateBoss(dt));if(boss&&P2&&!boss.dead&&boss.state!=='intro'&&boss.state!=='stun'&&boss.cdmg){const o=tg===P?P2:P;if(o&&!o.dead&&ov(boss,o))asPlayer(o,()=>hurtPlayer(boss.cdmg,Math.sign(o.x-boss.x)||1))}}
+  if(boss){const b0=boss;const tg=nearestP(b0.x+b0.w/2,b0.y+b0.h/2);asPlayer(tg,()=>updateBoss(dt));if(boss&&P2&&!boss.dead&&boss.state!=='intro'&&boss.state!=='stun'&&!boss.vanish&&boss.cdmg){const o=tg===P?P2:P;if(o&&!o.dead&&ov(boss,o))asPlayer(o,()=>hurtPlayer(boss.cdmg,Math.sign(o.x-boss.x)||1))}}
   // barrels
   for(const b of barrels){
     if(b.dead){if(b.arena&&arena.active){b.respawn-=dt;if(b.respawn<=0){b.dead=false;b.x=b.sx;b.y=b.sy-60;b.vx=b.vy=0;b.fuse=-1;b.thrown=false}}continue}
@@ -1487,6 +1498,7 @@ function updateWorld(dt){
   for(const u of pBul){
     if(u.g)u.vy+=u.g*dt;
     u.t+=dt;u.life-=dt;u.x+=u.vx*dt;u.y+=u.vy*dt;
+    if(u.kind==='vial'){const vb={x:u.x-9,y:u.y-9,w:18,h:18};let pop=solidPt(u.x,u.y+5)||u.y>lvl.h*T||u.life<=0||(boss&&!boss.dead&&ov(vb,boss));if(!pop)for(const e of enemies)if(!e.dead&&!e.hidden&&ov(vb,e)){pop=true;break}if(!pop)for(const b of lvl.bones)if(Math.abs(b.x-u.x)<18&&u.y>b.y-22&&u.y<b.y+4){pop=true;break}if(pop){u.dead=true;cureSplash(u.x,u.y)}continue}
     if(u.kind==='pbomb'){if(solidPt(u.x,u.y+6)||(boss&&!boss.dead&&ov({x:u.x-6,y:u.y-6,w:12,h:12},boss))||u.y>lvl.h*T){u.dead=true;explode(u.x,u.y,72,'thrown')}continue}
     if(u.kind==='fire'&&Math.random()<.7)part({x:u.x,y:u.y,vx:rand(-30,30),vy:rand(-60,-10),life:.35,max:.35,col:Math.random()<.5?'#ffd25a':'#ff7a1a',size:rand(2,4)});
     if(u.kind==='ice'&&Math.random()<.5)part({x:u.x,y:u.y,vx:rand(-20,20),vy:rand(-20,20),life:.3,max:.3,col:'#c9f6ff',size:2});
@@ -1548,7 +1560,7 @@ function updateWorld(dt){
   for(const f of lvl.fakes){const c=lvl.covers.find(c=>f.x>=c.x-T&&f.x<c.x+c.w&&f.y>=c.y-T&&f.y<c.y+c.h);if(c&&c.found)continue;if(Math.abs(f.x-P.x)<(crewHas('salt')?420:240)&&Math.random()<dt*.9)part({type:'star',x:f.x+rand(4,28),y:f.y+rand(4,28),vx:0,vy:-12,life:.5,max:.5,col:'#bff8ff',size:2})}
   for(const sp of springs)sp.sq=Math.max(0,sp.sq-dt);
   // flags
-  for(const f of flags){if(f.up){f.anim=Math.max(0,f.anim-dt*2);continue}{const fp=allP().find(pl=>!pl.dead&&ov({x:f.x,y:f.y-60,w:32,h:60},pl));if(fp){f.up=true;fp.air=100;f.anim=1;checkpoint={x:f.x+5,y:f.y};SFX.flag();popup(f.x+16,f.y-70,'CHECKPOINT','#9effa8');stars(f.x+16,f.y-56)}}}
+  for(const f of flags){if(f.up){f.anim=Math.max(0,f.anim-dt*2);continue}{const fp=allP().find(pl=>!pl.dead&&ov({x:f.x,y:f.y-60,w:32,h:60},pl));if(fp){f.up=true;fp.air=100;f.anim=1;checkpoint={x:f.x+5,y:f.y};if(lvl.plague&&lvl.vials<3){lvl.vials=3;popup(f.x+16,f.y-90,'VIALS REFILLED','#9effa8')}SFX.flag();popup(f.x+16,f.y-70,'CHECKPOINT','#9effa8');stars(f.x+16,f.y-56)}}}
   // particles
   for(const q of parts){q.life-=dt;q.vy+=(q.g||0)*dt;q.x+=q.vx*dt;q.y+=q.vy*dt;if(q.vr)q.rot+=q.vr*dt}
   parts=parts.filter(q=>q.life>0);
@@ -1565,6 +1577,7 @@ function collect(p){
   switch(p.type){
     case 'coin':addScore(100,x,y);SFX.coin();break;
     case 'gem':addScore(p.value,x,y);SFX.gem();stars(x,y+10);break;
+    case 'vial':if(lvl.vials>=6)addScore(150,x,y);lvl.vials=Math.min(6,lvl.vials+2);popup(x,y-14,lvl.vials>=6?'VIALS FULL':'+2 CURE VIALS','#9effa8');SFX.power();break;
     case 'ammo':if(P.ammo>=MAX_AMMO)addScore(150,x,y);P.ammo=Math.min(MAX_AMMO,P.ammo+5);popup(x,y-14,P.ammo>=MAX_AMMO?'AMMO FULL':'+5 SHOT','#ffd9a0');SFX.coin();break;
     case 'health':{const hv=crewHas('biscuit')?50:25;if(P.hp>=P.maxHp)addScore(250,x,y);P.hp=Math.min(P.maxHp,P.hp+hv);popup(x,y-14,'+'+hv+' HP','#9effa8');}SFX.power();break;
     case 'catnip':P.catnip=crewHas('bramble')?30:15;popup(x,y,'CATNIP!','#d6b0ff');SFX.power();break;
@@ -1626,6 +1639,7 @@ function drawBoss(g,b){
   const o={face:b.face,t:b.t,vx:b.vx,flash:b.flash,s:b.s,coat:b.coat,fur:b.fur,hat:b.hat,weapon:b.weapon,boss:true,wig:b.wig,atk:b.atk,aim:b.aim,recoil:b.recoil,beard:b.beard,plagued:!!(lvl&&lvl.plague)};
   if(b.state==='wind'){g.save();g.translate(rand(-2,2),0)}
   if(b.ghost)g.globalAlpha=.65+.2*Math.sin(b.t*3);
+  if(b.vanish===1)g.globalAlpha=.07;else if(b.vanish===2)g.globalAlpha=.25+.25*Math.sin(b.t*40);
   if(b.kind==='eel'){drawEel(g,b);const hx=b.x+b.w/2-camX,hy=b.y+b.h/2-camY;
     if(b.state==='zap'){const f=1-Math.max(0,b.st)/.95;g.save();g.setLineDash([10,8]);g.lineDashOffset=-b.t*40;g.strokeStyle=`rgba(255,240,120,${.35+.5*f})`;g.lineWidth=3;g.beginPath();g.arc(hx,hy,150,0,7);g.stroke();g.setLineDash([]);g.fillStyle=`rgba(255,240,120,${.08+.12*f})`;g.beginPath();g.arc(hx,hy,150*f,0,7);g.fill();g.restore();txt(g,'SWIM AWAY!',hx,hy-60,18,'#ffe94a','center',null,3)}
     if(b.state==='tired'){for(let k=0;k<3;k++){const a=b.t*4+k*2.1;starShape(g,hx+Math.cos(a)*26,hy-30+Math.sin(a)*8,6,'#ffe94a','#8a5a10')}txt(g,'HIT IT NOW!',hx,hy-48,16,'#9effa8','center',null,3)}}
@@ -1676,12 +1690,12 @@ function drawWorld(g){
     if(p.carry)drawBarrel(g,p.x+p.w/2-12-camX,p.y-26-camY,false);
     if(crewHas('salt')&&!p.dead){let best=null,bd=1500;for(const c of lvl.covers){if(c.found)continue;const d=Math.hypot(c.x+c.w/2-p.x,c.y+c.h/2-p.y);if(d<bd){bd=d;best=c}}if(best&&bd>60){const a=Math.atan2(best.y+best.h/2-p.y-20,best.x+best.w/2-p.x);const ax=p.x+p.w/2-camX+Math.cos(a)*40,ay=p.y+10-camY+Math.sin(a)*40;g.save();g.translate(ax,ay);g.rotate(a);g.globalAlpha=.6+.4*Math.sin(gt*5);g.fillStyle='#7fffe0';g.strokeStyle='#0d3a44';g.lineWidth=1.5;g.beginPath();g.moveTo(14,0);g.lineTo(-7,-9);g.lineTo(-3,0);g.lineTo(-7,9);g.closePath();g.fill();g.stroke();g.restore();g.globalAlpha=1}}
   }
-  drawBones(g);
+  drawBones(g);drawCured(g);
   if(TR&&lvl.trial)drawGhost(g);
   if(P2)drawPlayer2(g,P2);
   drawCoopTags(g);
   // bullets
-  for(const u of pBul){const x=u.x-camX,y=u.y-camY;if(u.kind==='tide'){const a=Math.min(1,u.life/.2);g.save();g.globalAlpha=a;g.translate(x,y);g.scale(Math.sign(u.vx)||1,1);g.fillStyle='rgba(90,190,240,.85)';g.beginPath();g.moveTo(-14,10);g.quadraticCurveTo(-2,-16,12,-6);g.quadraticCurveTo(4,-4,6,10);g.closePath();g.fill();g.fillStyle='rgba(230,250,255,.9)';g.beginPath();g.moveTo(-6,-6);g.quadraticCurveTo(4,-14,12,-6);g.quadraticCurveTo(4,-9,-6,-6);g.fill();g.restore();continue}
+  for(const u of pBul){const x=u.x-camX,y=u.y-camY;if(u.kind==='vial'){g.save();g.translate(x,y);g.rotate(u.t*11*(Math.sign(u.vx)||1));drawVial(g,0,4,1);g.restore();if(Math.random()<.5)part({x:u.x,y:u.y,vx:rand(-20,20),vy:rand(-30,10),life:.35,max:.35,col:'#9effa8',size:2});continue}if(u.kind==='tide'){const a=Math.min(1,u.life/.2);g.save();g.globalAlpha=a;g.translate(x,y);g.scale(Math.sign(u.vx)||1,1);g.fillStyle='rgba(90,190,240,.85)';g.beginPath();g.moveTo(-14,10);g.quadraticCurveTo(-2,-16,12,-6);g.quadraticCurveTo(4,-4,6,10);g.closePath();g.fill();g.fillStyle='rgba(230,250,255,.9)';g.beginPath();g.moveTo(-6,-6);g.quadraticCurveTo(4,-14,12,-6);g.quadraticCurveTo(4,-9,-6,-6);g.fill();g.restore();continue}
     if(u.kind==='bullet'){g.fillStyle='rgba(255,220,120,.4)';g.fillRect(x-u.vx*.02,y-1,u.vx*.02,2);g.fillStyle='#ffd25a';ell(g,x,y,3.5,3)}
     else if(u.kind==='fire'){g.fillStyle='rgba(255,120,30,.35)';ell(g,x,y,13,10);g.fillStyle='#ff7a1a';ell(g,x,y,8,6.5);g.fillStyle='#ffe58a';ell(g,x+Math.sign(u.vx)*2,y,4,3)}
     else if(u.kind==='ice'){g.save();g.translate(x,y);g.rotate(u.t*8);g.fillStyle='#c9f6ff';g.beginPath();for(let i=0;i<6;i++){const a=i/6*Math.PI*2;g.lineTo(Math.cos(a)*(i%2?4:9),Math.sin(a)*(i%2?4:9))}g.fill();g.restore()}
@@ -1708,6 +1722,7 @@ function drawWorld(g){
     else if(q.type==='heart'){g.globalAlpha=a;g.fillStyle=q.col;g.save();g.translate(x,y);g.beginPath();g.moveTo(0,4);g.bezierCurveTo(-7,-2,-3,-8,0,-3);g.bezierCurveTo(3,-8,7,-2,0,4);g.fill();g.restore();g.globalAlpha=1}
     else if(q.type==='bubble'){g.globalAlpha=Math.min(1,a*2);g.strokeStyle='rgba(230,250,255,.85)';g.lineWidth=1;g.beginPath();g.arc(x+Math.sin(gt*4+q.size*7)*2,y,q.size,0,7);g.stroke();g.globalAlpha=1}
     else if(q.type==='crabflee'){g.save();g.translate(x,y);g.scale(1.8,1.8);drawCrab(g,0,0,{face:q.vx>0?1:-1,t:gt,vx:q.vx});g.restore()}
+    else if(q.type==='cring'){g.strokeStyle=`rgba(150,255,160,${a})`;g.lineWidth=5*a;g.beginPath();g.arc(x,y,q.r*(1.1-a*.7),0,7);g.stroke()}
     else if(q.type==='ring'){g.strokeStyle=`rgba(255,220,140,${a})`;g.lineWidth=6*a;g.beginPath();g.arc(x,y,q.r*(1-a*.6),0,7);g.stroke()}
     else if(q.type==='smoke'){g.globalAlpha=a*.8;g.fillStyle=q.col;ell(g,x,y,q.size*(1.6-a),q.size*(1.6-a));g.globalAlpha=1}
     else if(q.type==='debris'){g.save();g.translate(x,y);g.rotate(q.rot);g.fillStyle=q.col;g.fillRect(-q.size/2,-q.size/4,q.size,q.size/2);g.restore()}
@@ -1742,6 +1757,7 @@ function drawHUD(g){
   if(EZ())txt(g,'EASY',W-14,H-12,16,'#9effa8','right',null,3);
   row(g2=>{g2.scale(.9,.9);g2.fillStyle='#e8902f';tri(g2,-7,-3,-8,-11,-2,-6);tri(g2,2,-6,8,-11,7,-3);ell(g2,0,0,8,7);g2.fillStyle='#c8312b';g2.fillRect(-8,-6,16,3)},'x '+lives);
   if(wetAt(P)||P.air<100){const a=P.air/100;txt(g,'AIR',W-128,y+8,16,a<.3&&Math.floor(gt*6)%2?'#ff6a5a':'#bfe8ff','left',null,3);g.fillStyle='rgba(0,0,0,.5)';rr(g,W-94,y-4,80,12,6);g.fill();g.fillStyle=a<.3?'#ff6a5a':'#7fd8ff';rr(g,W-94,y-4,80*a,12,6);g.fill();y+=24}
+  if(lvl.plague)row(g2=>drawVial(g2,0,3,1.1),'x '+lvl.vials,lvl.vials?'#9effa8':'#888');
   row(g2=>{g2.fillStyle='#333';g2.fillRect(-6,-4,16,4);g2.fillStyle='#5a3010';g2.fillRect(-8,-2,6,9);g2.fillStyle='#c9a227';g2.fillRect(-4,-1,3,2)},'x '+P.ammo);
   if(P.magic.t>0)row(g2=>{g2.rotate(-.7);g2.scale(.7,.7);sword(g2,P.magic.type,gt)},Math.ceil(P.magic.t)+'s',MAGIC[P.magic.type].glow);
   if(P.catnip>0)row(g2=>{g2.fillStyle='#56b03a';ell(g2,-4,0,5,2.6,-.5);ell(g2,4,-2,5,2.6,.5);g2.fillStyle='#b48ae0';ell(g2,0,-6,2,2)},Math.ceil(P.catnip)+'s','#d6b0ff');
@@ -1887,7 +1903,7 @@ function drawDone(g){
     txt(g,labels[k],x,y+48,16,shown&&got?'#ffe9c4':'#999','center',null,2);
     if(shown&&got&&(lvlStats.newStars>>k)&1)txt(g,'NEW!',x+26,y-20,14,'#9effa8','center',null,2)}
   const t=Math.floor(lvlStats.time);
-  const lines=[lvl.plague?'Plague islands cured: '+plagueCured()+' of '+NCH:lvl.def.bonus?'Secret Isles cleared: '+bonusCleared()+' of '+NB:lvl.def.storm?'Stormwrack Isles cleared: '+stormCleared()+' of '+NS:'Chart pieces: '+chartCount()+' of '+NCH,'Treasure: '+lvlStats.treasure+'     Foes beaten: '+lvlStats.kills+'     Time: '+Math.floor(t/60)+':'+String(t%60).padStart(2,'0'),'Secrets found: '+lvlStats.secrets+' of '+lvl.covers.length+'     Lives lost: '+lvlStats.deaths,'Doubloons banked: +'+(lvlStats.gold||0)+(lvlStats.firstClear?'  (spend them in the shop)':'  (replays pay less)')].concat(lvlStats.crew?['New crewmate: '+lvlStats.crew]:[]);
+  const lines=[lvl.plague?'Plague islands cured: '+plagueCured()+' of '+NCH+'     Pirates cured: '+(lvl.curedN||0):lvl.def.bonus?'Secret Isles cleared: '+bonusCleared()+' of '+NB:lvl.def.storm?'Stormwrack Isles cleared: '+stormCleared()+' of '+NS:'Chart pieces: '+chartCount()+' of '+NCH,'Treasure: '+lvlStats.treasure+'     Foes beaten: '+lvlStats.kills+'     Time: '+Math.floor(t/60)+':'+String(t%60).padStart(2,'0'),'Secrets found: '+lvlStats.secrets+' of '+lvl.covers.length+'     Lives lost: '+lvlStats.deaths,'Doubloons banked: +'+(lvlStats.gold||0)+(lvlStats.firstClear?'  (spend them in the shop)':'  (replays pay less)')].concat(lvlStats.crew?['New crewmate: '+lvlStats.crew]:[]);
   lines.forEach((l,i)=>txt(g,l,W/2,262+i*24,18,'#ffe9c4','center',null,2));
   if(doneT>1.6&&Math.floor(gt*2+titleT*2)%2)txt(g,'Press Enter for the map',W/2,378,18,'#fff','center',null,2);
 }
@@ -2147,8 +2163,10 @@ const SCENES={pre:[
 storm:[{bg:'storm',R:{boss:'squall'},say:[['R','Ring, Tempest Bell, ring! Blow that pesky cat right off the map!']]},{bg:'storm',L:{c:'cat'},R:{crew:'parrot'},need:'pip',say:[['R','Squawk! Hold on to your hat, Captain!'],['L','Hold on to EVERYTHING, Pip!']]},{bg:'bay',L:{c:'cat'},say:[['L','Where are we? These islands are not on any of our charts.'],['L','And that storm is still spinning out there. Somebody is steering it.']]}],
 stormPre:[[{bg:'storm',R:{boss:'squall'},say:[['R','My Great Storm Eel guards the sunken wreck. I hope you can hold your breath, cat!']]},{bg:'storm',L:{c:'cat'},R:{crew:'turtle'},need:'salt',say:[['R','A hundred storms I have sailed. Never one that followed a ship around.'],['L','Then let us find out who is steering it.']]}],[{bg:'storm',R:{boss:'squall'},say:[['R','Welcome to the eye of my hurricane, cat. Nice and calm... until I ring the bell!']]},{bg:'storm',L:{c:'cat'},R:{crew:'hedgehog'},need:'bramble',say:[['R','The only way up is through the dark mine tunnels!'],['L','Then grab a cart. Stop that bell and the storm stops too.']]}],
  [{bg:'storm',R:{boss:'brinewhisker'},say:[['R','The Admiral is fixing his bell on Thunderhead Peak. Nobody crosses my whirlpool!']]},{bg:'bay',L:{c:'cat'},R:{crew:'seal'},need:'coral',say:[['R','A whirlpool? Finally, a place where a seal can show off!'],['L','Lead the way, Coral. I will hold my breath.']]}],
- [{bg:'storm',R:{boss:'squallfinal'},say:[['R','My bell is fixed, and now it rings TWICE as loud! The whole sea will be one big storm!']]},{bg:'storm',L:{c:'cat'},R:{crew:'frog'},need:'fizz',say:[['R','Up through the mines and all the way to the top?'],['L','All the way, Fizz. This storm ends tonight.']]}]],
-plague:[{bg:'skull',R:{boss:'phantom'},say:[['R','You beat my Brigade, cat. Now meet my PLAGUE! Bone Fever for everyone!']]},{bg:'bay',L:{c:'cat'},R:{crew:'parrot'},need:'pip',say:[['R','Squawk! The Brigade turned into zombies! Zombie dogs! Skeleton rats!'],['L','And they keep getting back up. Smash the bones before they rise!']]},{bg:'bay',L:{c:'cat'},say:[['L','Every island on the coast is sick. Time to sail them all again and find a cure.']]}],
+ [{bg:'storm',R:{boss:'squallfinal'},say:[['R','My bell is fixed, and now it rings TWICE as loud! The whole sea will be one big storm!']]},{bg:'storm',L:{c:'cat'},R:{crew:'frog'},need:'fizz',say:[['R','Up through the mines and all the way to the top?'],['L','All the way, Fizz. This storm ends tonight.']]}],
+ [{bg:'ghost',R:{boss:'mistbeard'},say:[['R','Who sails into MY mist? Three hundred years, and nobody has ever found this island!']]},{bg:'ghost',L:{c:'cat'},R:{crew:'fox'},need:'marigold',say:[['R','The fog is so thick I cannot see my own map.'],['L','Stay close to the lanterns. Whoever is hiding here, we find them tonight.']]}]],
+mistEnd:[{bg:'ghost',L:{c:'cat'},R:{boss:'mistbeard'},say:[['R','My mist! You blew away three hundred years of fog!'],['L','The place needed some fresh air.']]},{bg:'ghost',R:{boss:'mistbeard'},say:[['R','Fine. FINE. Maybe a little sunshine would be nice. Do not tell anybody.']]},{bg:'bay',L:{c:'cat'},R:{crew:'parrot'},need:'pip',say:[['R','Squawk! Blue sky! No storm! No fog!'],['L','Every island out here is free now. Crew, take us home.']]}],
+plague:[{bg:'skull',R:{boss:'phantom'},say:[['R','You beat my Brigade, cat. Now meet my PLAGUE! Bone Fever for everyone!']]},{bg:'bay',L:{c:'cat'},R:{crew:'parrot'},need:'pip',say:[['R','Squawk! The Brigade turned into zombies! Zombie dogs! Skeleton rats!'],['L','And they keep getting back up. Smash the bones before they rise!']]},{bg:'bay',L:{c:'cat'},R:{crew:'owl'},need:'doc',say:[['R','Hoo! I brewed a cure. Throw a vial at a zombie and the fever goes away!'],['L','Zombie bulldogs back to grumpy bulldogs. Perfect.']]},{bg:'bay',L:{c:'cat'},say:[['L','Every island on the coast is sick. Time to sail them all again and find a cure.']]}],
 plagueEnd:[{bg:'skull',L:{c:'cat'},R:{boss:'phantom'},say:[['R','My plague! My beautiful Bone Fever! Gone!'],['L','The coast is cured, Admiral. Go haunt somebody else.']]},{bg:'bay',L:{c:'cat'},say:[['L','No more zombies. No more skeletons. Just sunshine and very confused bulldogs.']]}],
 stormFinal:[{bg:'storm',L:{c:'cat'},R:{boss:'squallfinal'},say:[['R','My bell! My storm! My hat is soaking wet!'],['L','The storm is over, Squall. Time to dry off.']]},{bg:'bay',L:{c:'cat'},R:{crew:'parrot'},need:'pip',say:[['R','Squawk! Blue sky! Blue sky!'],['L','The Stormwrack Isles look a lot nicer without a hurricane.']]},{bg:'bay',L:{c:'cat'},say:[['L','But look at the compass. It points to one more island, hidden in the mist...']]}],
 stormEnd:[{bg:'storm',L:{c:'cat'},R:{boss:'squall'},say:[['R','My bell! You cracked my beautiful Tempest Bell!'],['L','Good. Now the storm can take a nap.']]},{bg:'storm',R:{boss:'squall'},say:[['R','This is not over, cat! My storm still hides islands you have never seen!']]},{bg:'bay',L:{c:'cat'},say:[['L','He blew away into the clouds. The Stormwrack Isles are bigger than we thought.']]}],
@@ -2190,7 +2208,8 @@ const JOURNAL=[
  {k:'boss_galeeel',name:'The Great Storm Eel',fact:'Admiral Squall\'s pet. It lives in the sunken wreck and zaps anything that swims too close.'},
  {k:'boss_brinewhisker',name:'Captain Brinewhisker',fact:'Guards the whirlpool for Squall. He says he has never been seasick. He is lying.'},
  {k:'boss_squallfinal',name:'Squall, Storm Unleashed',fact:'Squall with his bell fixed and twice as loud. The last thing between Calico and clear skies.'},
- {k:'boss_squall',name:'Admiral Squall',fact:'The Brigade\'s weather wizard. His Tempest Bell calls hurricanes and lightning.'}
+ {k:'boss_squall',name:'Admiral Squall',fact:'The Brigade\'s weather wizard. His Tempest Bell calls hurricanes and lightning.'},
+ {k:'boss_mistbeard',name:'Mistbeard the Drowned',fact:'A ghost captain who hid his island in fog for 300 years. He fades away and pops up right behind you.'}
 ];
 let comic=null,journalToast=null,jSel=0,jTimer=0;
 function markJournal(k){if(save.journal[k])return;const e=JOURNAL.find(j=>j.k===k);if(!e)return;save.journal[k]=1;writeSave();journalToast={txt:'New journal entry: '+e.name,t:2.6}}
@@ -2238,16 +2257,16 @@ function drawJournal(g){
   g.fillStyle='#2a1a0e';g.fillRect(0,0,W,H);g.fillStyle='#e8d3a0';rr(g,24,14,752,422,10);g.fill();g.strokeStyle='#8a6a3a';g.lineWidth=4;g.stroke();g.strokeStyle='rgba(138,106,58,.4)';g.lineWidth=1;ln(g,W/2,24,W/2,60);
   const n=JOURNAL.filter(e=>save.journal[e.k]).length;
   g.fillStyle='#3a2414';g.font="38px 'Pirata One',serif";g.textAlign='center';g.fillText('Pirate Journal',W/2,52);g.font='16px Bangers,Impact,sans-serif';g.fillText(n+' / '+JOURNAL.length+' discovered',W/2,70);
-  JOURNAL.forEach((e,i)=>{const cx=40+(i%9)*80,cy=80+((i/9)|0)*72;const known=!!save.journal[e.k];g.fillStyle=known?'rgba(255,250,235,.7)':'rgba(90,60,30,.18)';rr(g,cx,cy,76,66,8);g.fill();g.strokeStyle=i===jSel?'#c8312b':'rgba(90,60,30,.4)';g.lineWidth=i===jSel?3:1.5;g.stroke();
-    if(known){g.save();rr(g,cx,cy,76,66,8);g.clip();jPortrait(g,e.k,cx+38,cy+62);g.restore()}else{g.fillStyle='rgba(90,60,30,.5)';g.font='28px Bangers,Impact,sans-serif';g.textAlign='center';g.fillText('?',cx+38,cy+44)}
-    if(e.k.startsWith('boss_')){g.fillStyle='#c8312b';ell(g,cx+67,cy+10,5,5)}});
+  JOURNAL.forEach((e,i)=>{const cx=40+(i%10)*72,cy=80+((i/10)|0)*72;const known=!!save.journal[e.k];g.fillStyle=known?'rgba(255,250,235,.7)':'rgba(90,60,30,.18)';rr(g,cx,cy,68,66,8);g.fill();g.strokeStyle=i===jSel?'#c8312b':'rgba(90,60,30,.4)';g.lineWidth=i===jSel?3:1.5;g.stroke();
+    if(known){g.save();rr(g,cx,cy,68,66,8);g.clip();jPortrait(g,e.k,cx+34,cy+62);g.restore()}else{g.fillStyle='rgba(90,60,30,.5)';g.font='28px Bangers,Impact,sans-serif';g.textAlign='center';g.fillText('?',cx+34,cy+44)}
+    if(e.k.startsWith('boss_')){g.fillStyle='#c8312b';ell(g,cx+59,cy+10,5,5)}});
   const e=JOURNAL[jSel],known=!!save.journal[e.k];g.fillStyle='rgba(90,60,30,.12)';rr(g,40,374,720,54,8);g.fill();
   g.textAlign='left';g.fillStyle='#3a2414';g.font='20px Bangers,Impact,sans-serif';g.fillText(known?e.name:'???',54,396);g.font='15px Bangers,Impact,sans-serif';g.fillStyle='#5a3a1a';const fl=wrapText(g,known?e.fact:'Not met yet. Keep exploring to fill in this page!',690);fl.slice(0,2).forEach((l,i)=>g.fillText(l,54,414+i*15));
   g.textAlign='right';g.fillStyle='#8a6a3a';g.font='13px Bangers,Impact,sans-serif';g.fillText('Arrows: browse     Esc: back',W-36,30);
 }
 function updateJournal(){
-  if(hit('right'))jSel=Math.min(JOURNAL.length-1,jSel+1);if(hit('left'))jSel=Math.max(0,jSel-1);if(hit('down'))jSel=Math.min(JOURNAL.length-1,jSel+9);if(hit('up'))jSel=Math.max(0,jSel-9);
-  if(lastTap){const t=lastTap;lastTap=null;pressed.start=false;for(let i=0;i<JOURNAL.length;i++){const cx=40+(i%9)*80,cy=80+((i/9)|0)*72;if(t.x>cx&&t.x<cx+76&&t.y>cy&&t.y<cy+66){jSel=i;SFX.click();return}}if(t.y<40&&t.x>W-200){goMap();return}}
+  if(hit('right'))jSel=Math.min(JOURNAL.length-1,jSel+1);if(hit('left'))jSel=Math.max(0,jSel-1);if(hit('down'))jSel=Math.min(JOURNAL.length-1,jSel+10);if(hit('up'))jSel=Math.max(0,jSel-10);
+  if(lastTap){const t=lastTap;lastTap=null;pressed.start=false;for(let i=0;i<JOURNAL.length;i++){const cx=40+(i%10)*72,cy=80+((i/10)|0)*72;if(t.x>cx&&t.x<cx+68&&t.y>cy&&t.y<cy+66){jSel=i;SFX.click();return}}if(t.y<40&&t.x>W-200){goMap();return}}
   if(hit('pause')||hit('journal')||hit('start'))goMap();
 }
 function drawJournalIcon(g,x,y,t){g.save();g.translate(x,y);g.fillStyle='#6b3a1a';rr(g,-18,-14,36,26,3);g.fill();g.fillStyle='#e8d3a0';rr(g,-15,-12,14,21,2);g.fill();rr(g,1,-12,14,21,2);g.fill();g.strokeStyle='rgba(90,60,30,.5)';g.lineWidth=1;for(let i=0;i<4;i++){ln(g,-13,-8+i*4,-3,-8+i*4);ln(g,3,-8+i*4,13,-8+i*4)}g.fillStyle='#c8312b';g.fillRect(6,-14,3,10+Math.sin(t*3));g.restore();
@@ -2335,10 +2354,31 @@ function plagueRewards(){const n=plagueCured();let msg=null;
 function drawPlagueToggle(g){if(!plagueOpen())return;const on=PLG();g.fillStyle=on?'#3f6a2a':'rgba(20,10,4,.75)';rr(g,664,140,126,28,14);g.fill();g.strokeStyle=on?'#ccff66':'#7a5a3a';g.lineWidth=2;g.stroke();
   g.fillStyle='#ece6d6';ell(g,681,152,6,5.5);g.fillRect(678,155,6,4);g.fillStyle='#222';ell(g,679,151.5,1.5,1.7);ell(g,683,151.5,1.5,1.7);
   txt(g,'Plague: '+(on?'ON':'OFF')+' (Y)',734,159,14,on?'#ccff66':'#ffe9c4','center',null,2);}
-function updateBones(dt){if(!lvl.bones||!lvl.bones.length)return;const mb=P&&P.atk>0&&!P.dead?meleeBox():null;
+function drawVial(g,x,y,s){g.save();g.translate(x,y);g.scale(s,s);g.fillStyle='rgba(230,255,240,.85)';rr(g,-2.5,-13,5,6,1);g.fill();g.fillStyle='#8a5a2b';g.fillRect(-3,-15,6,3);g.fillStyle='rgba(225,250,235,.9)';ell(g,0,-3,7,7);g.fillStyle='#5fdc6a';g.beginPath();g.arc(0,-3,6,.15,Math.PI-.15);g.fill();g.fillStyle='rgba(255,255,255,.8)';ell(g,-2.5,-5.5,1.6,1.6);g.restore()}
+const CURE_LINES=['Thanks, cat!','I feel... normal!','Where am I?','Woof! All better!','My bones feel great!','No more fever!','I want a sandwich.'];
+function cureSplash(x,y){const R=62;SFX.click();tone(980,.12,'triangle',.08,700);tone(1320,.25,'sine',.06,-500);
+  for(let i=0;i<20;i++)part({x,y,vx:rand(-230,230),vy:rand(-320,-40),g:900,life:.7,max:.7,col:Math.random()<.5?'#9effa8':'#e8fff0',size:rand(2,5)});smoke(x,y-6,8,'rgba(140,240,150,.5)');
+  parts.push({type:'cring',x,y,r:R,life:.45,max:.45,vx:0,vy:0,g:0});
+  let n=0;
+  for(const e of enemies){if(e.dead||!e.undead||e.type==='wcan')continue;if(Math.hypot(e.x+e.w/2-x,e.y+e.h/2-y)<R+e.w/2){cureEnemy(e);n++}}
+  for(const b of lvl.bones){if(b.gone)continue;if(Math.hypot(b.x-x,b.y-8-y)<R){b.gone=true;b.e.dead=true;burst(b.x,b.y-8,12,'#9effa8',200);popup(b.x,b.y-30,'CURED!','#9effa8');addScore(200,b.x,b.y-20);lvl.curedN++;n++}}
+  if(boss&&!boss.dead&&lvl.plague&&Math.hypot(boss.x+boss.w/2-x,boss.y+boss.h/2-y)<R+boss.w/2){if(hurtBoss(5,'shot'))popup(boss.x+boss.w/2,boss.y-10,'CURE!','#9effa8')}
+  if(n>=3){addScore(1000,x,y-40);popup(x,y-60,'CURE COMBO!','#9effa8');SFX.power()}}
+function cureEnemy(e){e.dead=true;lvlStats.kills++;lvl.curedN++;addScore(Math.round((e.score||200)+100),e.x+e.w/2,e.y);
+  const cx=e.x+e.w/2,by=e.y+e.h;stars(cx,e.y+e.h/2);burst(cx,e.y+e.h/2,10,'#9effa8',180);
+  const dir=P?(Math.sign(cx-(P.x+P.w/2))||1):1;
+  if(e.type==='grunt'||e.type==='musk'||e.type==='rat')lvl.cured.push({x:cx,y:by,type:e.type,face:dir,t:0,line:CURE_LINES[Math.random()*CURE_LINES.length|0]});
+  else popup(cx,e.y-14,CURE_LINES[Math.random()*CURE_LINES.length|0],'#c8ffd0');
+  if(Math.random()<.5||crewHas('penny'))drop('coin',e)}
+function updateCured(dt){if(!lvl.cured||!lvl.cured.length)return;for(const c of lvl.cured){c.t+=dt;if(c.t>.45){c.x+=c.face*(c.type==='rat'?190:150)*dt}if(c.t>.2&&!c.said){c.said=true;popup(c.x,c.y-64,c.line,'#c8ffd0')}}lvl.cured=lvl.cured.filter(c=>c.t<2)}
+function drawCured(g){if(!lvl.cured)return;for(const c of lvl.cured){const x=c.x-camX,y=c.y-camY;if(x<-60||x>W+60)continue;g.save();g.globalAlpha=Math.min(1,(2-c.t)*2);const run=c.t>.45;const o={face:c.face,t:gt,vx:run?c.face*150:0,flash:0};
+  if(c.type==='rat')drawRat(g,x,y,Object.assign(o,{fur:'#8d8a92'}));else drawDog(g,x,y,Object.assign(o,{coat:c.type==='musk'?'#2d5aa8':'#b3262a',fur:c.type==='musk'?'#c9a27a':'#d8b48a',hat:'shako'}));
+  g.fillStyle='#ff7a9a';for(let k=0;k<2;k++){const hy=y-56-((c.t*40+k*18)%36),hx=x+(k?8:-8)+Math.sin(c.t*6+k)*3;g.beginPath();g.moveTo(hx,hy+4);g.bezierCurveTo(hx-6,hy-2,hx-3,hy-7,hx,hy-3);g.bezierCurveTo(hx+3,hy-7,hx+6,hy-2,hx,hy+4);g.fill()}
+  g.restore()}}
+function updateBones(dt){updateCured(dt);if(!lvl.bones||!lvl.bones.length)return;const mb=P&&P.atk>0&&!P.dead?meleeBox():null;
   for(const b of lvl.bones){b.t-=dt;const box={x:b.x-18,y:b.y-20,w:36,h:20};
     if(b.t<2.25&&((mb&&ov(mb,box))||(P&&P.pound&&!P.dead&&ov(P,box)))){b.gone=true;burst(b.x,b.y-8,12,'#ece6d6',220);popup(b.x,b.y-30,'SMASHED!','#ece6d6');addScore(100,b.x,b.y-20);SFX.hit();continue}
-    if(b.t<=0){b.gone=true;const e=b.e;e.dead=false;e.revived=true;e.hp=Math.max(1,Math.ceil((e.maxHp||2)/2));e.x=b.x-e.w/2;e.y=b.y-e.h;e.vx=0;e.vy=-220;e.stun=.5;e.flash=.3;e.frozen=0;e.state='chase';smoke(b.x,b.y-10,8,'rgba(150,200,120,.6)');popup(b.x,b.y-50,'RISES AGAIN!','#a8e08a');tone(110,.5,'sawtooth',.05,60)}}
+    if(b.t<=0){b.gone=true;const e=b.e;e.dead=false;e.revived=true;e.hp=Math.max(1,Math.ceil((e.maxHp||2)/2));e.x=b.x-e.w/2;e.y=b.y-e.h;e.vx=0;e.vy=-220;e.stun=.5;e.flash=.3;e.frozen=0;e.state='chase';if(!enemies.includes(e))enemies.push(e);smoke(b.x,b.y-10,8,'rgba(150,200,120,.6)');popup(b.x,b.y-50,'RISES AGAIN!','#a8e08a');tone(110,.5,'sawtooth',.05,60)}}
   lvl.bones=lvl.bones.filter(b=>!b.gone)}
 function drawBones(g){if(!lvl.bones)return;for(const b of lvl.bones){const x=b.x-camX,y=b.y-camY;if(x<-40||x>W+40)continue;const sh=b.t<1?rand(-2.5,2.5)*(1-b.t):0;g.save();g.translate(x+sh,y);
   if(b.t<1.2){g.fillStyle=`rgba(150,230,110,${.18+.12*Math.sin(gt*14)})`;ell(g,0,-6,22,10)}
@@ -2630,8 +2670,8 @@ function render(){
   if(state==='gview'){drawGuest(ctx);return}
   if(state==='chal'){drawChal(ctx);return}
   if(state==='trials'){drawTrials(ctx);return}
-  drawWorld(ctx);if(lvl&&(lvl.def.dark||lvl.darkF>.01))drawDark(ctx);drawHUD(ctx);drawCoopHUD(ctx);drawModeHUD(ctx);if(drawModeOverlay(ctx))return;
-  if(state==='intro'){const d=LEVELS[lvlIdx];drawOverlay(ctx,(lvl.plague?'Plague ':'')+(d.bonus?'Secret Isle '+(lvlIdx-NCH+1):d.storm?'Storm Isle '+(lvlIdx-SB+1):'Level '+(lvlIdx+1))+': '+d.name,[lvl.plague?'The Bone Fever got here first. Smash fallen bones before they rise again!':d.blurb,'Find the chart piece at the end of the level.',lvl.covers.length?'Secrets hidden here: '+lvl.covers.length+'. Look for sparkles!':''].concat(cages.length?['A crewmate is locked in a cage here. Break them out!']:[]),'Press Enter')}
+  drawWorld(ctx);if(lvl&&(lvl.def.dark||lvl.def.mist||lvl.darkF>.01))drawDark(ctx);drawHUD(ctx);drawCoopHUD(ctx);drawModeHUD(ctx);if(drawModeOverlay(ctx))return;
+  if(state==='intro'){const d=LEVELS[lvlIdx];drawOverlay(ctx,(lvl.plague?'Plague ':'')+(d.bonus?'Secret Isle '+(lvlIdx-NCH+1):d.mist?'Mist Isle':d.storm?'Storm Isle '+(lvlIdx-SB+1):'Level '+(lvlIdx+1))+': '+d.name,[lvl.plague?'Bone Fever! Press X to throw Cure Vials and turn zombies back to normal.':d.blurb,'Find the chart piece at the end of the level.',lvl.covers.length?'Secrets hidden here: '+lvl.covers.length+'. Look for sparkles!':''].concat(cages.length?['A crewmate is locked in a cage here. Break them out!']:[]),'Press Enter')}
   else if(state==='paused')drawPause(ctx);
   else if(state==='done')drawDone(ctx);
   else if(state==='gameover')drawOverlay(ctx,'Game Over',['The Brigade got you this time.','Score: '+score],'Enter: retry the level     Q: world map','#ff6a5a');
@@ -2694,7 +2734,7 @@ function update(dt){
     case 'intro':gt+=dt;introT-=dt;if(introT<=0||hit('start')||hit('jump'))state='play';break;
     case 'play':if(hit('pause')){state='paused';break}{const steps=dt>1/70?2:1;for(let i=0;i<steps;i++){updateWorld(dt/steps);if(state!=='play')break}}break;
     case 'paused':if(hit('pause')||hit('start'))state='play';else if(hit('quit')){if(lvl.def.rush){rushEnd(false);break}if(lvl.trial){trialExit();break}save.best=Math.max(save.best,score);writeSave();goMapFor(lvlIdx)}break;
-    case 'done':{doneT+=dt;for(let k=0;k<3;k++){const at=.4+k*.45;if(doneT>=at&&doneT-dt<at&&(lvlStats.stars>>k)&1)tone(880+k*220,.18,'triangle',.1)}if(doneT>1.6&&hit('start')){recordScore(()=>{if(lvl.def.bonus){const bi=lvlIdx-NCH;bPos=bi;goBMap(Math.min(save.bonusLevel,bi+1))}else if(lvl.def.storm){const si=lvlIdx-SB;sPos=si;const endSc=lvlStats.firstClear?(si===NS-1?SCENES.stormFinal:(si===1?SCENES.stormEnd:null)):null;if(endSc)playComic(endSc,()=>{goSMap(Math.min(save.stormLevel,si+1));banner={txt:si===NS-1?'The storm is over!':'More islands are hidden in the storm...',t:3.5}});else goSMap(Math.min(save.stormLevel,si+1))}else if(lvl.plague){mapPos=lvlIdx;if(lvlIdx===NCH-1&&lvlStats.firstClear)playComic(SCENES.plagueEnd,()=>{goMap(lvlIdx);banner={txt:'The plague is cured!',t:3.5}});else goMap(Math.min(mLevel(),lvlIdx+1))}else if(lvlIdx===NCH-1&&lvlStats.firstClear){playComic(SCENES.end,()=>{state='win';save.best=Math.max(save.best,score);writeSave();playSong(4)})}else{mapPos=lvlIdx;goMap(Math.min(mLevel(),lvlIdx+1))}})}break}
+    case 'done':{doneT+=dt;for(let k=0;k<3;k++){const at=.4+k*.45;if(doneT>=at&&doneT-dt<at&&(lvlStats.stars>>k)&1)tone(880+k*220,.18,'triangle',.1)}if(doneT>1.6&&hit('start')){recordScore(()=>{if(lvl.def.bonus){const bi=lvlIdx-NCH;bPos=bi;goBMap(Math.min(save.bonusLevel,bi+1))}else if(lvl.def.storm){const si=lvlIdx-SB;sPos=si;const endSc=lvlStats.firstClear?(si===SFIN?SCENES.stormFinal:si===SFIN+1?SCENES.mistEnd:(si===1?SCENES.stormEnd:null)):null;if(endSc)playComic(endSc,()=>{goSMap(Math.min(save.stormLevel,si+1));banner={txt:si===SFIN?'The storm is over!':si===SFIN+1?'The mist has lifted!':'More islands are hidden in the storm...',t:3.5}});else goSMap(Math.min(save.stormLevel,si+1))}else if(lvl.plague){mapPos=lvlIdx;if(lvlIdx===NCH-1&&lvlStats.firstClear)playComic(SCENES.plagueEnd,()=>{goMap(lvlIdx);banner={txt:'The plague is cured!',t:3.5}});else goMap(Math.min(mLevel(),lvlIdx+1))}else if(lvlIdx===NCH-1&&lvlStats.firstClear){playComic(SCENES.end,()=>{state='win';save.best=Math.max(save.best,score);writeSave();playSong(4)})}else{mapPos=lvlIdx;goMap(Math.min(mLevel(),lvlIdx+1))}})}break}
     case 'gameover':if(lvl&&lvl.trial){if(hit('quit'))trialExit();else if(hit('start'))startTrial(lvlIdx);break}if(hit('quit')){recordScore(()=>{lives=9;score=levelStartScore;goMapFor(lvlIdx)});break}if(hit('start')){recordScore(()=>{lives=9;score=levelStartScore;nextLife=Math.ceil((score+1)/50000)*50000;startLevel(lvlIdx)})}break;
     case 'win':if(hit('start')){mapPos=NCH-1;goMap(NCH-1)}break;
     case 'entry':updateEntry();break;
@@ -2739,7 +2779,7 @@ function strikeNear(pl,off){
   if(gy===null)return;STM.bolts.push({x,y:gy,t:0,warn:EZ()?1.35:1.0,hit:false});tone(90,.45,'sawtooth',.025,40)}
 function updateStorm(dt){
   const S=STM;S.flash=Math.max(0,S.flash-dt);if(S.boss){S.boss.t-=dt;if(S.boss.t<=0)S.boss=null}
-  const free=lvl.def.storm&&!(arena.active&&!arena.done)&&!(P&&shelteredAt(P));
+  const free=lvl.def.storm&&!lvl.def.mist&&!(arena.active&&!arena.done)&&!(P&&shelteredAt(P));
   if(free){S.st-=dt;
     if(S.phase==='calm'&&S.st<=0){S.phase='warn';S.st=1.3;S.dir=Math.random()<.65?-1:1;tone(200,.6,'sawtooth',.03,-120)}
     else if(S.phase==='warn'&&S.st<=0){S.phase='gust';S.st=2.6;tone(140,1.2,'sawtooth',.035,-60)}
@@ -2798,7 +2838,7 @@ function drawStormCS(g){const C=STORMCS,t=C.t;
   if(t>6.6){g.fillStyle=`rgba(0,0,0,${Math.min(1,(t-6.6)/.9)})`;g.fillRect(0,0,W,H)}
   if(t>1.2)txt(g,'Enter to skip',W-14,H-10,14,'rgba(255,255,255,.7)','right',null,2)}
 /* ---- the storm map ---- */
-const SMAPN=[[200,300],[420,224],[620,300],[650,150]],SFOG=[[290,112]];let sSel=0,sPos=0,svoyage=null;
+const SMAPN=[[200,300],[420,224],[620,300],[650,150],[300,122]],SFIN=3;let sSel=0,sPos=0,svoyage=null;
 function goSMap(sel){state='smap';if(sel!==undefined)sSel=sel;sSel=Math.min(sSel,save.stormLevel);if(sPos>save.stormLevel)sPos=sSel;playSong(11)}
 function stormCleared(){let n=0;for(let i=0;i<NS;i++)if(starsOf(SB+i)&1)n++;return n}
 function stormStars(){let n=0;for(let i=0;i<NS;i++){const s=starsOf(SB+i);n+=(s&1)+((s>>1)&1)+((s>>2)&1)}return n}
@@ -2808,7 +2848,7 @@ function drawHomeIcon(g,x,y,t){g.save();g.translate(x,y);g.fillStyle='rgba(255,2
   txt(g,'SAIL HOME',x,y+30,12,'#ffe9c4','center',null,3);txt(g,'(Esc)',x,y+43,11,'#ffe9c4','center',null,3)}
 function drawSMap(g){
   const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#1c2836');gr.addColorStop(1,'#0b1620');g.fillStyle=gr;g.fillRect(0,0,W,H);
-  const calm=(starsOf(SB+NS-1)&1)>0;if(calm){g.fillStyle='rgba(120,190,230,.35)';g.fillRect(0,0,W,H)}else swirl(g,90,150,titleT*.9,100,.7);
+  const calm=(starsOf(SB+SFIN)&1)>0;if(calm){g.fillStyle='rgba(120,190,230,.35)';g.fillRect(0,0,W,H)}else swirl(g,90,150,titleT*.9,100,.7);
   g.strokeStyle='rgba(160,200,230,.16)';g.lineWidth=1.5;for(let y=90;y<H;y+=26)for(let x=((y*7)%60)-60;x<W;x+=60){const o=Math.sin(titleT*2+x*.05+y)*6;g.beginPath();g.arc(x+o,y,8,Math.PI*1.1,Math.PI*1.9);g.stroke()}
   if(!calm){g.strokeStyle='rgba(180,200,235,.25)';g.lineWidth=1;g.beginPath();for(let i=0;i<90;i++){const x=(i*71.3+titleT*90)%W,y=((i*53.1+titleT*520)%(H+40))-20;g.moveTo(x,y);g.lineTo(x-6,y+14)}g.stroke()}
   const ph=calm?1:titleT%7;if(ph<.07||(ph>.15&&ph<.2)){g.fillStyle='rgba(230,240,255,.18)';g.fillRect(0,0,W,H)}
@@ -2817,17 +2857,20 @@ function drawSMap(g){
   txt(g,'★ '+stormStars()+' / '+NS*3,14,32,22,'#ffd94a','left');
   for(let i=0;i<NS-1;i++){const a=SMAPN[i],b=SMAPN[i+1];const open=i+1<=save.stormLevel;g.setLineDash([7,7]);g.lineDashOffset=-titleT*12;g.strokeStyle=open?'rgba(200,230,255,.9)':'rgba(255,255,255,.2)';g.lineWidth=3;g.beginPath();g.moveTo(a[0],a[1]+8);g.quadraticCurveTo((a[0]+b[0])/2,(a[1]+b[1])/2+30,b[0],b[1]+8);g.stroke()}
   g.setLineDash([]);
-  SFOG.forEach(([x,y],k)=>{g.fillStyle='rgba(60,70,90,.85)';for(let j=0;j<5;j++)ell(g,x-30+j*15+Math.sin(titleT+j+k)*3,y+Math.cos(j*2)*6,24,16);g.fillStyle='rgba(90,100,120,.9)';ell(g,x,y-6,26,16);txt(g,'?',x,y+4,26,'#bfe4ff','center',null,3)});
-  txt(g,calm?'One more island hides in the mist...':'More islands hide in the storm...',290,152,13,'rgba(191,228,255,.8)','center',null,2);
+  const mistLocked=save.stormLevel<SFIN+1,mistDone=(starsOf(SB+SFIN+1)&1)>0;
+  if(mistLocked){const [x,y]=SMAPN[SFIN+1];g.fillStyle=calm?'rgba(170,185,200,.85)':'rgba(60,70,90,.85)';for(let j=0;j<5;j++)ell(g,x-30+j*15+Math.sin(titleT+j)*3,y+Math.cos(j*2)*6,24,16);g.fillStyle=calm?'rgba(200,212,224,.9)':'rgba(90,100,120,.9)';ell(g,x,y-6,26,16);txt(g,'?',x,y+4,26,'#bfe4ff','center',null,3);
+    txt(g,calm?'One more island hides in the mist...':'More islands hide in the storm...',x,y+34,13,'rgba(191,228,255,.8)','center',null,2)}
   for(let i=0;i<NS;i++){const [x,y]=SMAPN[i];const L=LEVELS[SB+i];const locked=i>save.stormLevel;
     if(i===sSel){g.strokeStyle=`rgba(170,215,255,${.5+.4*Math.sin(titleT*5)})`;g.lineWidth=3;g.beginPath();g.ellipse(x,y+4,52,25,0,0,7);g.stroke()}
+    if(i===SFIN+1&&mistLocked)continue;
     drawIsland(g,x,y,L.theme,locked,titleT);
+    if(i===SFIN+1&&!mistDone){g.fillStyle=`rgba(200,215,215,${.35+.1*Math.sin(titleT*1.5)})`;for(let j=0;j<4;j++)ell(g,x-34+j*22+Math.sin(titleT*.7+j)*6,y-6+Math.cos(j*1.7)*8,20,10)}
     g.fillStyle=locked?'#555':'#2a6aa8';ell(g,x+31,y-24,10,10);g.strokeStyle='#fff';g.lineWidth=1.5;g.stroke();txt(g,String(i+1),x+31,y-18,13,'#fff','center',null,2);
     if(!locked){const st=starsOf(SB+i);for(let k=0;k<3;k++)starShape(g,x-17+k*17,y+28,7,(st>>k)&1?'#ffd94a':'rgba(0,0,0,.35)',(st>>k)&1?'#8a5a10':'rgba(255,255,255,.5)')}}
   drawHomeIcon(g,56,330,titleT);
   const sp=Math.max(0,Math.min(NS-1,sPos));const i0=Math.floor(sp),i1=Math.min(NS-1,i0+1),f=sp-i0;const sx=SMAPN[i0][0]+(SMAPN[i1][0]-SMAPN[i0][0])*f,sy=SMAPN[i0][1]+(SMAPN[i1][1]-SMAPN[i0][1])*f;drawShip(g,sx-36,sy+16,sSel>=sPos?1:-1,titleT);
   const L=LEVELS[SB+sSel],st=starsOf(SB+sSel);panel(g,110,382,580,62);
-  txt(g,'Storm Isle '+(sSel+1)+': '+L.name,128,408,22,'#bfe4ff','left');
+  txt(g,(sSel===SFIN+1?'Mist Isle':'Storm Isle '+(sSel+1))+': '+L.name,128,408,22,'#bfe4ff','left');
   const labels=['Clear','All secrets','No lives lost'];let lx=128;labels.forEach((l,k)=>{starShape(g,lx+7,428,7,(st>>k)&1?'#ffd94a':'rgba(0,0,0,.4)',(st>>k)&1?'#8a5a10':'rgba(255,255,255,.5)');txt(g,l,lx+18,433,14,'#ffe9c4','left',null,2);lx+=g.measureText(l).width+36});drawDblStatus(g,lx,SB+sSel);
   if(Math.floor(titleT*2)%2)txt(g,'Enter to play',672,433,16,'#fff','right',null,2);
   if(banner)txt(g,banner.txt,W/2,250,30,'#ffd94a','center',null,4);
@@ -3120,7 +3163,7 @@ function frame(now){
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
-window.__G={get state(){return state},set state(v){state=v},get P(){return P},get lvl(){return lvl},get boss(){return boss},get enemies(){return enemies},get arena(){return arena},get plats(){return plats},get springs(){return springs},startKraken,get KR(){return KR},set krakenSafe(v){krakenSafe=v},get mapPos(){return mapPos},storyStart,get comic(){return comic},get carts(){return carts},get mounts(){return mounts},get vents(){return vents},goBMap,get bSel(){return bSel},get BTL(){return BTL},startBattle,recordScore,set score(v){score=v},EZ,get ropes(){return ropes},get zips(){return zips},get cannons(){return cannons},get boulder(){return boulder},get mapSel(){return mapSel},goMap,levelComplete,get lvlStats(){return lvlStats},get cages(){return cages},save:()=>save,get pickups(){return pickups},startLevel,keys,pressed,CH,LEVELS,get score(){return score},dblCount,togglePlague,plagueCured,get enemies(){return enemies},get pickups(){return pickups},get RUSH(){return RUSH},get TR(){return TR},startRush,startTrial,goChal,get lvlStats(){return lvlStats},STM,startSeaEvent,startReef,startBoard,get RF(){return RF},get BD(){return BD},goSMap,startStormCS,get STORMCS(){return STORMCS},get sPos(){return sPos},NET,get P2(){return P2},P2in,netSnap};
+window.__G={get state(){return state},set state(v){state=v},get P(){return P},get lvl(){return lvl},get boss(){return boss},get enemies(){return enemies},get arena(){return arena},get plats(){return plats},get springs(){return springs},startKraken,get KR(){return KR},set krakenSafe(v){krakenSafe=v},get mapPos(){return mapPos},storyStart,get comic(){return comic},get carts(){return carts},get mounts(){return mounts},get vents(){return vents},goBMap,get bSel(){return bSel},get BTL(){return BTL},startBattle,recordScore,set score(v){score=v},EZ,get ropes(){return ropes},get zips(){return zips},get cannons(){return cannons},get boulder(){return boulder},get mapSel(){return mapSel},goMap,levelComplete,get lvlStats(){return lvlStats},get cages(){return cages},save:()=>save,get pickups(){return pickups},startLevel,keys,pressed,CH,LEVELS,get score(){return score},dblCount,togglePlague,plagueCured,get enemies(){return enemies},get pickups(){return pickups},get RUSH(){return RUSH},get TR(){return TR},startRush,startTrial,goChal,get lvlStats(){return lvlStats},STM,startSeaEvent,startReef,startBoard,get RF(){return RF},get BD(){return BD},get pBul(){return pBul},set lvlIdx(v){lvlIdx=v},goSMap,startStormCS,get STORMCS(){return STORMCS},get sPos(){return sPos},NET,get P2(){return P2},P2in,netSnap};
 </script>
 </body>
 </html>
