@@ -186,6 +186,20 @@ chunk('zigzag',['..........g.........','.........===........','..............s..
 chunk('gantry',['..........v.........','....................','..c.c.c.c.c.c.c.c...','.H.CCCCCCCCCCCCCC.H.','.H................H.','.H................H.','.H................H.','.H..^^^^^^^^^^^^..H.',...G3]);
 chunk('hill',['....................','....############....','..cc#.g.g.l.g.g#cc..','..==#..........#==..','....W..........#..e.','....W..x....n..#....',...G3],[[4,8,11,4]]);
 chunk('cellar',['.....c.c.c.c..e.....','..######FF########..','..##....gHg.n...##..','####..g..H..g.a.####','####....gHg.....####','####################'],[[4,11,12,3]]);
+chunk('lever1',['............#.......','............#.......','............#.......','............#.......','............#.......','............#..g.g..','............#.......','....c.c.c...#.......','............#.......','...=====....|.......','............|...c...','...L........|....e..',...G3]);
+chunk('lever2',['...............#....','...............#....','...............#....','...............#....','...............#....','....c.c.c......#....','...............#....','...............#....','.L.............#..g.','===............|....','...............|....','.......^^^.....|..s.',...G3]);
+chunk('lever3',['........#.......#...','........#.......#...','........#.......#...','........#.......#...','........#.......#...','........#..c.c..#...','........#.......#...','........#.......#...','........#.......#...','........|.......|...','........|.......|...','..L.....|.r..L..|.g.',...G3]);
+chunk('lever4',['................#...','................#...','................#...','................#...','................#...','................#...','.....c...c...c..#...','................#...','................#...','................|...','................|...','.L...*....*.....|.g.',...G3]);
+chunk('ice1',['....................','....................','....................','....................','....................','....................','.....c.c......c.c...','....................','....................','....................','....................','.....r.........r....','IIIIIIII...IIIIIIIII','########...#########','########...#########']);
+chunk('ice2',['....................','....................','....................','....................','....................','....................','..################..','...V..V...V...V.V...','....................','.....c..c..c..c.....','....................','..........e.........','IIIIIIIIIIIIIIIIIIII','####################','####################']);
+chunk('ice3',['....................','....................','....................','....................','....................','.........c..........','........III.........','....................','....c.........c.....','...III.......III....','....................','....................','##^^^^^^^^^^^^^^^^##','####################','####################']);
+chunk('conv1',['....................','....................','....................','....................','....................','....................','....................','....................','....................','......c.c.c.c.......','....................','..........s.........','###<<<<<<<<<<<<<<###','####################','####################']);
+chunk('conv2',['....................','....................','....................','....................','....................','....................','.............g......','....................','....c.c.c......c....','...>>>>>>>...>>>>...','....................','....................','###^^^^^^^^^^^^^^###','####################','####################']);
+chunk('conv3',['....................','....................','....................','....................','..............c.c.c.','.................s..','.............#######','.............#######','.......c.c...#######','......<<<<<<.#######','.............#######','.............#######',...G3]);
+chunk('fire1',['....................','....................','....................','....................','....................','....................','....................','....................','....................','.....c...c...c......','....................','...*...*...*...*....',...G3]);
+chunk('fire2',['....................','....................','....................','....................','....................','....................','....................','....................','.....c....c....c....','....................','....................','....*......*......*.','#######..######..###','#######..######..###','#######..######..###']);
+chunk('fire3',['....................','....................','....................','....................','....................','..........c.........','..........*.........','.........===........','.....*........*.....','....===......===....','....................','....................','###..............###','###..............###','###..............###']);
+chunk('vines',['....................','....................','....................','.....O.....O........','....................','....................','....................','....................','...c.....c.....c....','....................','....................','....................','###^^^^^^^^^^^^^####','####################','####################']);
 chunk('springs',['....c.g.c.....c.g.c.','....................','...=====......=====.','....................','....................','........=====.......','....................','....................','.J.....e.......J....',...G3]);
 chunk('brig',['......c.c.c.........','....................','....................','..t..e....K...r..t..',...G3]);
 chunk('cannon',['.........c.c.c......','.......c.......c....','....................','....................','....................','..Q.................','#####..........#####','#####..........#####','#####..........#####']);
@@ -217,41 +231,41 @@ chunk('boss',[
 
 const LEVELS=[
  {name:'Barkwater Docks',theme:'docks',magic:'fire',boss:'warden',song:0,
-  blurb:'Slip out of the brig and fight your way along the Brigade\'s wharf.',
-  chunks:['start','gaps','stairs','check','ambush','ladders','mover','spikes','prebuss','boss']},
+  blurb:'Fight along the Brigade\'s wharf. Pull levers to open iron gates.',fixed:true,
+  chunks:['start','hill','gaps','stairs','check','ladders','lever1','brig','check','mover','cellar','spikes','prebuss','boss']},
  {name:'Thornwood Canopy',theme:'forest',magic:'ice',boss:'ratbeard',song:1,
-  blurb:'High in the old trees, Ratbeard\'s gang guards the second chart piece.',
-  chunks:['start','ladders','gaps','tower','check','crumble','gauntlet','vault','mover','ambush','prebuss','boss']},
+  blurb:'Swing on vines and ride ziplines high in the treetops.',fixed:true,
+  chunks:['start','hill','vines','ladders','check','zipline','brig','crumble','check','ropes','cellar','tower','prebuss','boss']},
  {name:'Ochre Gulch',theme:'canyon',magic:'lightning',boss:'mastiff',song:2,
-  blurb:'Rope bridges, red rock and a gunner who never runs out of powder.',
-  chunks:['start','crumble','stairs','spikes','check','tower','mover','gauntlet','vault','gaps','ambush','prebuss','boss']},
+  blurb:'A giant boulder chases you through the whole canyon. Run!',fixed:true,boulder:'rock',
+  chunks:['start','hill','crumble','gaps','check','stairs','minecart','brig','check','spikes','gaps','cellar','zigzag','prebuss','boss']},
  {name:'Port Saltmarsh',theme:'city',magic:'random',boss:'admiral',song:3,
-  blurb:'The Admiral guards the fourth piece on the rooftops of his harbor town.',
-  chunks:['start','gauntlet','ambush','spikes','check','crumble','tower','mover','ladders','check','stairs','vault','gaps','gauntlet','prebuss','boss']},
+  blurb:'Pull the levers and race through the gates before they slam shut.',fixed:true,
+  chunks:['start','hill','lever2','ambush','check','cannon','brig','lever3','check','stairs','cellar','vault','prebuss','boss']},
  {name:"Smuggler's Grotto",theme:'grotto',magic:'ice',boss:'bilgewater',song:5,
-  blurb:'A glowing sea cave where Captain Bilgewater hides his stolen loot.',
-  chunks:['start','pillars','gaps','ladders','check','zigzag','crumble','ambush','mover','vault','gauntlet','prebuss','boss']},
+  blurb:'A flooded sea cave. Swim the tunnels and grab air at bubble vents.',fixed:true,
+  chunks:['start','hill','pillars','check','reefA~w','abyss~w','check~w','brig','ladders','check','reefB~w','cellar','zigzag','prebuss','boss']},
  {name:'Frostbite Pass',theme:'snow',magic:'fire',boss:'husky',song:6,
-  blurb:'Icy cliffs, snowdrifts and a sergeant who loves the cold.',
-  chunks:['start','stairs','pillars','spikes','gantry','check','tower','gaps','zigzag','mover','crumble','ambush','prebuss','boss']},
+  blurb:'A giant snowball chases you down the icy mountain. Run!',fixed:true,boulder:'snow',
+  chunks:['start','hill','ice1','stairs','check','ice2','brig','spikes','check','ice3','cellar','gaps','ice1','prebuss','boss']},
  {name:'The Iron Tide',theme:'ship',magic:'lightning',boss:'gnaw',song:7,
-  blurb:"Board the Brigade's flagship and climb through its rigging.",
-  chunks:['start','ambush','ladders','gantry','gauntlet','check','pillars','mover','zigzag','stairs','check','tower','crumble','vault','prebuss','boss']},
+  blurb:'Conveyor belts push you around this iron cargo ship.',fixed:true,
+  chunks:['start','hill','conv1','battery','check','conv2','brig','ladders','check','conv3','cellar','cannon','gantry','prebuss','boss']},
  {name:'Cinder Keep',theme:'volcano',magic:'random',boss:'blackjowl',song:8,
-  blurb:'The Brigade\'s fortress over the lava. Lord Blackjowl holds the eighth piece.',
-  chunks:['start','gauntlet','pillars','spikes','gantry','check','ambush','zigzag','crumble','mover','tower','check','stairs','gaps','gantry','vault','prebuss','boss']},
+  blurb:'Fire jets blast from the floor. Time your runs between flames.',fixed:true,
+  chunks:['start','hill','fire1','crumble','check','fire2','brig','lever4','check','pillars','cellar','fire3','prebuss','boss']},
  {name:'Bramblemoor Bayou',theme:'swamp',magic:'fire',boss:'sludgetail',song:9,
-  blurb:'Fog, fireflies and bouncy springs. Boss Sludgetail rules this swamp.',
-  chunks:['start','springs','pillars','zigzag','check','gantry','ambush','mover','springs','gauntlet','crumble','prebuss','boss']},
+  blurb:'Ride rafts past sharks, swing over the swamp, bounce on springs.',fixed:true,
+  chunks:['start','hill','springs','river','check','vines','brig','zigzag','check','river','cellar','springs','prebuss','boss']},
  {name:'Stormwatch Cliffs',theme:'storm',magic:'random',boss:'thunderjaw',song:10,
-  blurb:'Rain, lightning and the last chart piece on the lighthouse cliffs.',
-  chunks:['start','gauntlet','springs','spikes','gantry','check','zigzag','pillars','crumble','mover','check','tower','springs','ambush','gantry','vault','prebuss','boss']},
+  blurb:'Blast out of cannons and zip down the stormy lighthouse cliffs.',fixed:true,
+  chunks:['start','hill','springs','cannon','check','zipline','brig','gantry','check','tower','cellar','cannon','vault','prebuss','boss']},
  {name:'Shipwreck Graveyard',theme:'ghost',magic:'ice',boss:'grimtail',song:11,
-  blurb:'A foggy bay full of sunken ships. Something spooky guards piece eleven.',
-  chunks:['start','gauntlet','springs','pillars','zigzag','check','crumble','gantry','ambush','mover','check','tower','stairs','gaps','vault','gauntlet','prebuss','boss']},
+  blurb:'A cursed boulder chases you through the dark ship graveyard. Run!',fixed:true,boulder:'rock',
+  chunks:['start','hill','wrecks','gaps','check','zigzag~d','brig','spikes~d','check','stairs','cellar','gaps','wrecks','prebuss','boss']},
  {name:'Temple of the Ninth Tide',theme:'temple',magic:'random',boss:'barkhaven',song:12,
-  blurb:'The jungle temple where the compass waits. The Grand Admiral stands in your way.',
-  chunks:['start','gauntlet','pillars','springs','spikes','gantry','check','zigzag','crumble','ambush','mover','check','tower','gaps','stairs','gantry','vault','check','gauntlet','prebuss','boss']},
+  blurb:'Gates, fire jets, conveyors and ice. The Grand Admiral waits.',fixed:true,
+  chunks:['start','hill','lever3','fire1','check','conv2','ice3','brig','check','lever4','fire2','cellar','check','fire3','vault','prebuss','boss']},
  {name:'The Brigade Armada',theme:'armada',magic:'lightning',boss:'snarlington',song:17,
   blurb:'Barkhaven fled to his war fleet with the compass. Leap from ship to ship!',
   chunks:['start','battery','ambush','ropes','check','gantry','cannon','zigzag','battery','check','mover','tower','river','gauntlet','check','walls','prebuss','boss']},
@@ -286,12 +300,12 @@ const LEVELS=[
   blurb:'Thick fog hides everything past your whiskers. Raise the checkpoint lanterns, ride the dark carts, and find who is hiding here.',
   chunks:['start','hill','wrecks','check','ropes','lagoon','check','zigzag','minecart~d','ladders~d','check~d','walls~d','cellar','check','reefB~w','abyss~w','check~w','reefA~w','crabride','check','pillars','gauntlet','prebuss','boss']}
 ];
-LEVELS.forEach(L=>{if(!L.chunks.includes('hill')){L.chunks.splice(2,0,'hill');L.chunks.splice(Math.floor(L.chunks.length*.66),0,'cellar')}if(L.bonus||L.storm)return;L.chunks.splice(Math.floor(L.chunks.length*.45),0,'brig')});
+LEVELS.forEach(L=>{if(L.fixed)return;if(!L.chunks.includes('hill')){L.chunks.splice(2,0,'hill');L.chunks.splice(Math.floor(L.chunks.length*.66),0,'cellar')}if(L.bonus||L.storm)return;L.chunks.splice(Math.floor(L.chunks.length*.45),0,'brig')});
 const EXTRA_NEW=[['ropes','chase','walls','cannon'],['river','zipline','chase','walls','ropes'],['cannon','zipline','beach'],['river','cannon','walls','beach']];
 const EXTRA=[['cannon'],['ropes','walls'],['zipline','chase'],['ropes','cannon','walls'],['river','zipline'],['chase','ropes','walls'],['river','cannon','zipline'],['chase','ropes','walls'],['river','ropes','cannon'],['chase','river','zipline','walls']];
 const EXTRA2=[['beach'],['battery'],['beach'],['battery','beach'],['beach'],['battery'],['beach','battery'],['battery'],['beach'],['battery','beach']];
-LEVELS.forEach((L,li)=>{if(L.bonus||L.storm)return;const ex=(EXTRA[li]||EXTRA_NEW[li-10]||[]).concat(EXTRA2[li]||[['beach','battery'],['battery','beach']][li-10]||[]);const n=L.chunks.length-2;const pos=ex.map((_,k)=>Math.max(2,Math.floor((k+1)*n/(ex.length+1))));for(let k=ex.length-1;k>=0;k--)L.chunks.splice(pos[k],0,ex[k])});
-LEVELS.forEach((L,li)=>{const tpl=L.water?'dbl_reef':['dbl_climb','dbl_wall','dbl_spring'][li%3];const ch=L.chunks;const bad=n=>!n||n.includes('~')||n==='boss'||n==='prebuss';let pos=-1;for(let k=Math.floor(ch.length*.55);k<ch.length-2;k++){if(!bad(ch[k])&&!bad(ch[k-1])){pos=k;break}}if(pos<0)for(let k=Math.floor(ch.length*.55);k>2;k--){if(!bad(ch[k])&&!bad(ch[k-1])){pos=k;break}}if(pos<0)pos=Math.max(2,ch.length-2);ch.splice(pos,0,tpl)});
+LEVELS.forEach((L,li)=>{if(L.bonus||L.storm||L.fixed)return;const ex=(EXTRA[li]||EXTRA_NEW[li-10]||[]).concat(EXTRA2[li]||[['beach','battery'],['battery','beach']][li-10]||[]);const n=L.chunks.length-2;const pos=ex.map((_,k)=>Math.max(2,Math.floor((k+1)*n/(ex.length+1))));for(let k=ex.length-1;k>=0;k--)L.chunks.splice(pos[k],0,ex[k])});
+LEVELS.forEach((L,li)=>{const tpl=L.water?'dbl_reef':L.boulder?'dbl_spring':['dbl_climb','dbl_wall','dbl_spring'][li%3];const ch=L.chunks;const bad=n=>!n||n.includes('~')||n==='boss'||n==='prebuss';let pos=-1;for(let k=Math.floor(ch.length*.55);k<ch.length-2;k++){if(!bad(ch[k])&&!bad(ch[k-1])){pos=k;break}}if(pos<0)for(let k=Math.floor(ch.length*.55);k>2;k--){if(!bad(ch[k])&&!bad(ch[k-1])){pos=k;break}}if(pos<0)pos=Math.max(2,ch.length-2);ch.splice(pos,0,tpl)});
 const NCH=LEVELS.filter(l=>!l.bonus&&!l.storm).length,NB=LEVELS.filter(l=>l.bonus).length,SB=NCH+NB,NS=LEVELS.filter(l=>l.storm).length;
 const CREW=[
  {id:'pip',name:'Pip the Parrot',kind:'parrot',perk:'Flies in and drops bombs on bosses'},
@@ -311,6 +325,7 @@ const CREW=[
  {id:'whisker',name:'Old Whiskerbeard',kind:'oldcat',perk:'Start every level with 10 seconds of catnip'}
 ];
 function crewHas(id){return (guestOn()?NET.hostCrew:save.crew).includes(id)}
+if((save.layoutV|0)<2){for(let i=0;i<12;i++){try{localStorage.removeItem('ccGhostB'+i)}catch(e){}if(save.trials&&save.trials[i])save.trials[i].t=null}save.layoutV=2;try{localStorage.setItem('calicoCutlass',JSON.stringify(save))}catch(e){}}
 if((save.v|0)<2){if(save.stars.length>12){const old=save.stars.slice(12,16);save.stars[12]=0;save.stars[13]=0;for(let i=0;i<4;i++)save.stars[14+i]=old[i]|0}save.v=2;try{localStorage.setItem('calicoCutlass',JSON.stringify(save))}catch(e){}}
 if(!save.seenScene||typeof save.seenScene!=='object')save.seenScene={};if(!save.journal||typeof save.journal!=='object')save.journal={};
 for(let i=0;i<NCH;i++)if((save.stars[i]|0)&1)save.level=Math.max(save.level,Math.min(NCH-1,i+1));
@@ -973,10 +988,10 @@ function buildLevel(idx,dov){
   const rows=Array.from({length:15},()=>'');
   let arenaCol=0;
   const covers=[];const chunkStarts=[];
-  const wetR=[],darkR=[],wetCols=[];
-  def.chunks.forEach(n0=>{const sp=n0.split('~'),n=sp[0],fl=sp[1];const ch=CH[n];const w=Math.max(...ch.map(r=>r.length));const c0=rows[0].length;if(fl==='w'){wetR.push([c0*T,(c0+w)*T]);for(let k=c0;k<c0+w;k++)wetCols[k]=1}if(fl==='d')darkR.push([c0*T,(c0+w)*T]);if(n==='boss')arenaCol=c0;else chunkStarts&&chunkStarts.push(c0);for(const cv of CHC[n])covers.push({tx:c0+cv[0],ty:cv[1],tw:cv[2],th:cv[3],x:(c0+cv[0])*T,y:cv[1]*T,w:cv[2]*T,h:cv[3]*T,a:1,found:false});for(let y=0;y<15;y++)rows[y]+=(ch[y]||'').padEnd(w,'.')});
+  const wetR=[],darkR=[],wetCols=[],colCh=[];let chi=0;
+  def.chunks.forEach(n0=>{const sp=n0.split('~'),n=sp[0],fl=sp[1];const ch=CH[n];const w=Math.max(...ch.map(r=>r.length));const c0=rows[0].length;if(fl==='w'){wetR.push([c0*T,(c0+w)*T]);for(let k=c0;k<c0+w;k++)wetCols[k]=1}if(fl==='d')darkR.push([c0*T,(c0+w)*T]);if(n==='boss')arenaCol=c0;else chunkStarts&&chunkStarts.push(c0);for(const cv of CHC[n])covers.push({tx:c0+cv[0],ty:cv[1],tw:cv[2],th:cv[3],x:(c0+cv[0])*T,y:cv[1]*T,w:cv[2]*T,h:cv[3]*T,a:1,found:false});for(let k=c0;k<c0+w;k++)colCh[k]=chi;chi++;for(let y=0;y<15;y++)rows[y]+=(ch[y]||'').padEnd(w,'.')});
   const w=rows[0].length,h=15;
-  lvl={idx,def,w,h,t:[],covers,fakes:[],crumble:new Map(),tex:getTex(def.tex||def.theme),bg:getBG(def.bgt||def.theme),info:THEME_INFO[def.theme],wetR,darkR,darkF:def.dark?1:0};resetStorm();lvl.plague=!!(save.plague&&idx<NCH&&!dov&&!TR);lvl.bones=[];lvl.vials=lvl.plague?3:0;lvl.cured=[];lvl.curedN=0;
+  lvl={idx,def,w,h,t:[],covers,fakes:[],crumble:new Map(),tex:getTex(def.tex||def.theme),bg:getBG(def.bgt||def.theme),info:THEME_INFO[def.theme],wetR,darkR,darkF:def.dark?1:0};resetStorm();lvl.k=new Map();lvl.levers=[];lvl.gates=[];lvl.jets=[];lvl.icicles=[];lvl.gateT={};lvl.plague=!!(save.plague&&idx<NCH&&!dov&&!TR);lvl.bones=[];lvl.vials=lvl.plague?3:0;lvl.cured=[];lvl.curedN=0;
   enemies=[];pBul=[];eBul=[];pickups=[];barrels=[];crates=[];flags=[];plats=[];parts=[];torches=[];springs=[];cages=[];signs=[];vents=[];carts=[];mounts=[];ropes=[];const cartStops=[];zips=[];cannons=[];chases=[];boulder=null;boss=null;pipT=4;let zipStart=null;const dEnds=[];
   arena={active:false,done:false,x:arenaCol*T,bossSpawn:null};
   let start={x:64,y:384};
@@ -985,6 +1000,11 @@ function buildLevel(idx,dov){
     if((def.water||wetCols[x])&&'eprswS'.includes(c)){if(c==='e'||c==='p')spawnEnemy('jelly',x,y);else if(c==='r'||c==='s')spawnEnemy('puffer',x,y);continue}
     switch(c){
       case '#':lvl.t[y][x]=1;break;
+      case 'I':case '<':case '>':lvl.t[y][x]=1;lvl.k.set(y*w+x,c);break;
+      case '|':lvl.t[y][x]=1;lvl.k.set(y*w+x,'|');lvl.gates.push({tx:x,ty:y,ch:colCh[x],open:false});break;
+      case 'L':lvl.levers.push({x:px+16,y:py+T,ch:colCh[x],flip:0,used:false});break;
+      case '*':lvl.jets.push({x:px+16,y:py+T,ph:-x*.28,on:false,warn:false});break;
+      case 'V':lvl.icicles.push({x:px+16,y:py,y0:py,state:'hang',t:0,vy:0,grow:1});break;
       case '=':lvl.t[y][x]=2;break;
       case 'H':lvl.t[y][x]=3;break;
       case '^':lvl.t[y][x]=4;break;
@@ -1040,6 +1060,7 @@ function buildLevel(idx,dov){
   for(const c0 of chunkStarts)if(def.water||wetCols[c0+10]){const tx=c0+10;for(let y=13;y>2;y--){if(lvl.t[y][tx]===1&&lvl.t[y-1][tx]===0){if(!vents.some(v=>Math.abs(v.x-(tx*T+16))<200))vents.push({x:tx*T+16,y:y*T});break}}}
   dEnds.sort((a,b)=>a-b);for(const ch of chases)ch.endX=dEnds.find(e=>e>ch.x)||ch.x+40*T;
   checkpoint={x:start.x,y:start.y};
+  lvl.roller=def.boulder&&!def.rush?{x:start.x-480,y:start.y-44,r:def.boulder==='snow'?46:44,vx:0,rot:0,wait:1.6,snow:def.boulder==='snow',gy:start.y}:null;
   P=newPlayer(start.x,start.y-42);
   camX=0;camY=lvl.h*T-H;
 }
@@ -1221,7 +1242,7 @@ function updatePlayer(dt){
       if(p.onGround&&keys.down&&!ladderBelow)p.climb=false;
     }
   }else{
-    const acc=p.onGround?2400:1500;const target=ax*spd;
+    const gk=groundKind(p);const acc=p.onGround?(gk==='I'?330:2400):1500;const target=ax*spd*(gk==='I'?1.08:1);
     if(!p.launched&&!p.pound&&p.wlock<=0)p.vx+=clamp(target-p.vx,-acc*dt,acc*dt);
     if(p.pound)p.vx=0;
     if(p.rideWas&&p.rideWas.turtle&&p.onGround)p.vx=0;
@@ -1243,7 +1264,7 @@ function updatePlayer(dt){
     if(p.vy<0&&!p.bounce&&!(keys.jump||keys.up))p.vy+=GR*dt*1.3;
     p.vy=p.pound?950:Math.min(p.vy+GR*dt,900);
     const wasAir=!p.onGround;
-    {const wdv=windOn(p),vx0=p.vx;p.vx+=wdv;moveBody(p,dt,p.drop>0);if(p.vx!==0)p.vx=vx0}
+    {const wdv=windOn(p)+(gk==='<'?-115:gk==='>'?115:0),vx0=p.vx;p.vx+=wdv;moveBody(p,dt,p.drop>0);if(p.vx!==0)p.vx=vx0}
     if(p.onGround){p.dj=false;p.launched=false}
     if(p.hitWall&&(p.launched))p.launched=false;
     if(!p.onGround&&p.hitWall&&owns('wjump')&&ax===p.hitWall){p.wallDir=p.hitWall;p.wallT=.14;if(p.vy>130){p.vy=130;if(Math.random()<.4)part({x:p.hitWall>0?p.x+p.w:p.x,y:p.y+p.h-6,vx:0,vy:-20,life:.3,max:.3,col:'rgba(220,210,190,.5)',size:3,type:'smoke'})}}
@@ -1330,6 +1351,7 @@ function afterDeath(){
 function respawn(){
   for(const pl of plats)if(pl.raft){pl.x=pl.x0;pl.started=false;pl.dx=0}
   if(boulder){boulder.src.armed=true;boulder=null}
+  if(lvl.roller&&!lvl.roller.gone){const R=lvl.roller;R.x=checkpoint.x-520;R.vx=0;R.wait=1.4;R.y=checkpoint.y-R.r;R.gy=checkpoint.y}
   for(const r of ropes)r.held=false;
   for(const pl of plats)if(pl.turtle){pl.x=pl.sx;pl.dx=0}
   for(const c of carts){c.x=c.x0;c.y=c.y0;c.vx=c.vy=0;c.riding=false;c.done=false}
@@ -1611,6 +1633,7 @@ function drawTiles(g){
   const X=lvl.tex;
   for(let y=ty0;y<=ty1;y++)for(let x=tx0;x<=tx1;x++){
     const c=lvl.t[y][x];if(!c)continue;const sx=Math.round(x*T-camX),sy=Math.round(y*T-camY);
+    if(c===1&&lvl.k.size){const kk=lvl.k.get(y*lvl.w+x);if(kk){drawKindTile(g,kk,sx,sy,x,y);continue}}
     if(c===1){const img=tileAt(x,y-1)===1?X.fills[(x*7+y*13)%3]:X.top;g.drawImage(img,sx,sy,T,T);if(tileAt(x-1,y)!==1&&x>0){g.fillStyle='rgba(0,0,0,.35)';g.fillRect(sx,sy,3,T)}if(tileAt(x+1,y)!==1&&x<lvl.w-1){g.fillStyle='rgba(0,0,0,.35)';g.fillRect(sx+T-3,sy,3,T)}}
     else if(c===2)g.drawImage(X.plat,sx,sy,T,T);
     else if(c===3)g.drawImage(X.lad,sx,sy,T,T);
@@ -1658,7 +1681,7 @@ function drawWorld(g){
     g.font='13px Bangers,Impact,sans-serif';g.textAlign='left';g.textBaseline='alphabetic';g.fillStyle='#2a1406';g.fillText('WALL JUMP UP',x-46,y-63,74);g.fillText('OR KEEP GOING',x-46,y-44,74);
     g.fillStyle='#c8312b';tri(g,x+34,y-62,x+39,y-73,x+44,y-62);tri(g,x+34,y-53,x+46,y-48,x+34,y-43)}
   for(const c of lvl.covers){const sx=c.x-camX;if(sx>W||sx+c.w<0)continue;for(let ty=c.ty;ty<c.ty+c.th;ty++)for(let tx=c.tx;tx<c.tx+c.tw;tx++){if(tileAt(tx,ty)===1)continue;g.drawImage(lvl.tex.fills[(tx*5+ty*11)%3],Math.round(tx*T-camX),Math.round(ty*T-camY),T,T)}g.fillStyle='rgba(10,6,2,.62)';g.fillRect(Math.round(sx),Math.round(c.y-camY),c.w,c.h)}
-  drawTiles(g);
+  drawTiles(g);drawGadgets(g);drawRoller(g);
   for(const pl of plats){const x=pl.x-camX,y=pl.y-camY;if(pl.raft){const bob=Math.sin(gt*3)*1.5;for(let i=0;i<4;i++){g.fillStyle=i%2?'#7a5232':'#8a6238';rr(g,x+2,y+bob+i*3.2-1,pl.w-4,6,3);g.fill()}g.strokeStyle='#d8c08a';g.lineWidth=1.5;ln(g,x+14,y+bob-1,x+14,y+bob+12);ln(g,x+pl.w-14,y+bob-1,x+pl.w-14,y+bob+12);g.fillStyle='#4a2a12';g.fillRect(x+pl.w/2-1,y+bob-34,2.5,34);g.fillStyle='#c8312b';tri(g,x+pl.w/2+1,y+bob-34,x+pl.w/2+1,y+bob-24,x+pl.w/2+14,y+bob-29);if(!pl.started&&Math.abs(P.x-pl.x)<260)txt(g,'Hop on!',x+pl.w/2,y-44,13,'#fff','center',null,3);continue}if(pl.turtle){drawTurtle(g,x,y,pl.face,gt,P.ride===pl||(P2&&P2.ride===pl));if(Math.abs(P.x-pl.x)<240&&P.ride!==pl)txt(g,'Hop on!',x+pl.w/2,y-30,13,'#fff','center',null,3);continue}for(let i=0;i<3;i++)g.drawImage(lvl.tex.plat,x+i*T,y-2,T,T);g.strokeStyle='rgba(220,200,150,.6)';g.lineWidth=1.5;ln(g,x+4,y,x+4,y-30);ln(g,x+pl.w-4,y,x+pl.w-4,y-30)}
   for(const f of flags){const x=f.x-camX;if(x>-60&&x<W+20){if(darkAt(f.x))drawBrazier(g,x,f.y-camY,f.up,gt);else drawFlag(g,{x,y:f.y-camY,up:f.up,anim:f.anim},gt)}}
   for(const v of vents){const x=v.x-camX,y=v.y-camY;if(x<-30||x>W+30)continue;g.fillStyle='#4a5a6a';ell(g,x,y-3,13,6);g.fillStyle='#2a3a4a';ell(g,x-4,y-5,2.5,1.5);ell(g,x+4,y-4,2,1.3);g.fillStyle='rgba(200,240,255,.12)';g.fillRect(x-14,y-170,28,168)}
@@ -2392,7 +2415,7 @@ function drawCured(g){if(!lvl.cured)return;for(const c of lvl.cured){const x=c.x
   if(c.type==='rat')drawRat(g,x,y,Object.assign(o,{fur:'#8d8a92'}));else drawDog(g,x,y,Object.assign(o,{coat:c.type==='musk'?'#2d5aa8':'#b3262a',fur:c.type==='musk'?'#c9a27a':'#d8b48a',hat:'shako'}));
   g.fillStyle='#ff7a9a';for(let k=0;k<2;k++){const hy=y-56-((c.t*40+k*18)%36),hx=x+(k?8:-8)+Math.sin(c.t*6+k)*3;g.beginPath();g.moveTo(hx,hy+4);g.bezierCurveTo(hx-6,hy-2,hx-3,hy-7,hx,hy-3);g.bezierCurveTo(hx+3,hy-7,hx+6,hy-2,hx,hy+4);g.fill()}
   g.restore()}}
-function updateBones(dt){updateCured(dt);if(!lvl.bones||!lvl.bones.length)return;const mb=P&&P.atk>0&&!P.dead?meleeBox():null;
+function updateBones(dt){updateCured(dt);updateGadgets(dt);updateRoller(dt);if(!lvl.bones||!lvl.bones.length)return;const mb=P&&P.atk>0&&!P.dead?meleeBox():null;
   for(const b of lvl.bones){b.t-=dt;const box={x:b.x-18,y:b.y-20,w:36,h:20};
     if(b.t<2.25&&((mb&&ov(mb,box))||(P&&P.pound&&!P.dead&&ov(P,box)))){b.gone=true;burst(b.x,b.y-8,12,'#ece6d6',220);popup(b.x,b.y-30,'SMASHED!','#ece6d6');addScore(100,b.x,b.y-20);SFX.hit();continue}
     if(b.t<=0){b.gone=true;const e=b.e;e.dead=false;e.revived=true;e.hp=Math.max(1,Math.ceil((e.maxHp||2)/2));e.x=b.x-e.w/2;e.y=b.y-e.h;e.vx=0;e.vy=-220;e.stun=.5;e.flash=.3;e.frozen=0;e.state='chase';if(!enemies.includes(e))enemies.push(e);smoke(b.x,b.y-10,8,'rgba(150,200,120,.6)');popup(b.x,b.y-50,'RISES AGAIN!','#a8e08a');tone(110,.5,'sawtooth',.05,60)}}
@@ -2721,6 +2744,87 @@ function drawQuests(g){g.fillStyle='#3a2414';g.fillRect(0,0,W,H);
 function drawQuestIcon(g,x,y,t){g.save();g.translate(x,y);g.fillStyle='#5a3418';g.fillRect(-3,4,4,18);g.fillRect(15,4,4,18);g.fillStyle='#8a5a2b';rr(g,-18,-16,40,24,3);g.fill();g.fillStyle='#efe2c0';g.fillRect(-14,-13,10,13);g.fillRect(-2,-12,10,12);g.fillRect(10,-13,9,13);g.fillStyle='#c8312b';ell(g,-9,-12,1.6,1.6);ell(g,3,-11,1.6,1.6);ell(g,14,-12,1.6,1.6);
   if(questReady()){const b=1+Math.sin(t*6)*.12;g.fillStyle='#ffd94a';ell(g,20,-18,8*b,8*b);txt(g,'!',20,-13,14,'#3a2414','center',null,0)}g.restore();
   txt(g,'QUESTS (R)',x+2,y+38,12,'#fff','center',null,3)}
+
+/* =========================================================
+   GADGETS: lever gates, ice, conveyor belts, flame jets, icicles
+   ========================================================= */
+function gateDur(){return EZ()?10:7}
+function groundKind(p){if(!p.onGround||p.gty==null||!lvl.k||!lvl.k.size)return null;const ty=p.gty;const c=Math.floor((p.x+p.w/2)/T);let k=lvl.k.get(ty*lvl.w+c);if(k)return k;k=lvl.k.get(ty*lvl.w+Math.floor(p.x/T))||lvl.k.get(ty*lvl.w+Math.floor((p.x+p.w-1)/T));return k||null}
+function pullLever(L){if(!lvl.gateT)return;const was=(lvl.gateT[L.ch]||0)>0;lvl.gateT[L.ch]=gateDur();L.flip=1;L.used=true;
+  for(const gt0 of lvl.gates)if(gt0.ch===L.ch&&!gt0.open){gt0.open=true;lvl.t[gt0.ty][gt0.tx]=0}
+  if(!was){SFX.click();tone(140,.25,'square',.07,-60);setTimeout(()=>{try{tone(220,.3,'sawtooth',.05,180)}catch(e){}},90);popup(L.x,L.y-60,'GATE OPEN!','#ffd94a')}}
+function leverBox(L){return {x:L.x-14,y:L.y-44,w:28,h:44}}
+function gateClear(g0){const r={x:g0.tx*T,y:g0.ty*T,w:T,h:T};if(P&&!P.dead&&ov(P,r))return false;for(const e of enemies)if(!e.dead&&ov(e,r))return false;return true}
+function updateGadgets(dt){if(!lvl||!lvl.levers)return;
+  // levers: touch to pull
+  for(const L of lvl.levers){L.flip=Math.max(0,L.flip-dt*3);const tch=!!(P&&!P.dead&&ov(P,leverBox(L)));if(tch&&!L.touch)pullLever(L);L.touch=tch}
+  for(const ch in lvl.gateT){if(lvl.gateT[ch]<=0)continue;const before=lvl.gateT[ch];lvl.gateT[ch]-=dt;const t=lvl.gateT[ch];
+    if(Math.ceil(t)!==Math.ceil(before)&&t>0)tone(t<2.5?1100:800,.05,'square',.04);
+    if(t<=0){let all=true;for(const g0 of lvl.gates)if(g0.ch==ch&&g0.open){if(gateClear(g0)){g0.open=false;lvl.t[g0.ty][g0.tx]=1}else all=false}
+      if(!all)lvl.gateT[ch]=.05;else{tone(110,.3,'square',.07,-40);shake=Math.max(shake,3)}}}
+  // flame jets
+  for(const j of lvl.jets){const ph=((gt+j.ph)%3+3)%3;const on=ph>=2,warn=ph>=1.45&&ph<2;
+    if(on&&!j.on&&Math.abs(j.x-camX-W/2)<W*.6)tone(90,.35,'sawtooth',.05,60);j.on=on;j.warn=warn;
+    if(warn&&Math.random()<dt*14)part({x:j.x+rand(-5,5),y:j.y-4,vx:rand(-20,20),vy:rand(-90,-40),life:.35,max:.35,col:'#ffb347',size:2});
+    if(!on)j.hitP=false;if(on){const fb={x:j.x-11,y:j.y-104,w:22,h:104};if(P&&!P.dead&&!j.hitP&&ov(P,fb)){j.hitP=true;hurtPlayer(20,Math.sign(P.x+P.w/2-j.x)||1)}
+      for(const e of enemies)if(!e.dead&&!e.hidden&&ov(e,fb)&&(e.jetCd||0)<=gt){e.jetCd=gt+.8;hurtEnemy(e,1,Math.sign(e.x+e.w/2-j.x)||1,120,{force:true})}}}
+  // icicles
+  for(const ic of lvl.icicles){
+    if(ic.state==='hang'){if(P&&!P.dead&&Math.abs(P.x+P.w/2-ic.x)<44&&P.y>ic.y&&P.y-ic.y<360){ic.state='shake';ic.t=.45;tone(1400,.08,'triangle',.04,-400)}}
+    else if(ic.state==='shake'){ic.t-=dt;if(ic.t<=0){ic.state='fall';ic.vy=0}}
+    else if(ic.state==='fall'){ic.vy=Math.min(900,ic.vy+GR*dt);ic.y+=ic.vy*dt;const box={x:ic.x-7,y:ic.y,w:14,h:30};
+      if(P&&!P.dead&&ov(P,box)){hurtPlayer(15,Math.sign(P.x+P.w/2-ic.x)||1);ic.state='gone';ic.t=4;iceShatter(ic.x,ic.y+20)}
+      else if(solidPt(ic.x,ic.y+30)||ic.y>lvl.h*T){ic.state='gone';ic.t=4;iceShatter(ic.x,ic.y+26)}}
+    else if(ic.state==='gone'){ic.t-=dt;if(ic.t<=0){ic.state='hang';ic.y=ic.y0;ic.grow=0}}
+    if(ic.state==='hang')ic.grow=Math.min(1,(ic.grow==null?1:ic.grow)+dt*1.5)}}
+function iceShatter(x,y){tone(1800,.1,'triangle',.05,-900);for(let i=0;i<10;i++)part({type:'debris',x,y,vx:rand(-180,180),vy:rand(-260,-60),g:1300,life:.6,max:.6,col:i%2?'#dff4ff':'#9fd8f0',size:rand(2,4),rot:Math.random()*6,vr:rand(-12,12)})}
+function drawKindTile(g,k,sx,sy,x,y){const X=lvl.tex;
+  if(k==='I'){g.drawImage(tileAt(x,y-1)===1?X.fills[(x*7+y*13)%3]:X.top,sx,sy,T,T);g.fillStyle='rgba(150,215,250,.68)';g.fillRect(sx,sy,T,T);g.strokeStyle='rgba(255,255,255,.35)';g.lineWidth=2;g.beginPath();g.moveTo(sx+((x*13)%20),sy+T);g.lineTo(sx+((x*13)%20)+12,sy+6);g.stroke();if(tileAt(x,y-1)!==1){g.fillStyle='#f2fcff';g.fillRect(sx,sy,T,6);g.fillStyle='rgba(255,255,255,.9)';g.fillRect(sx+4+((x*11)%14),sy+9,9,2);if(Math.sin(gt*2+x*1.7)>.93){g.fillStyle='#fff';ell(g,sx+16,sy+3,2.5,2.5)}}return}
+  if(k==='<'||k==='>'){const d=k==='>'?1:-1;g.fillStyle='#3a3f48';g.fillRect(sx,sy,T,T);g.fillStyle='#22262c';g.fillRect(sx,sy+T-8,T,8);g.fillStyle='#4a505a';g.fillRect(sx,sy,T,9);
+    const off=((gt*110*d)%16+16)%16;g.fillStyle='#ffd25a';for(let i=-1;i<3;i++){const ax=sx+i*16+off;if(ax<sx-6||ax>sx+T-2)continue;g.beginPath();if(d>0){g.moveTo(ax,sy+1);g.lineTo(ax+5,sy+4.5);g.lineTo(ax,sy+8)}else{g.moveTo(ax+5,sy+1);g.lineTo(ax,sy+4.5);g.lineTo(ax+5,sy+8)}g.fill()}
+    g.fillStyle='#6a707a';for(const rx of [8,24]){ell(g,sx+rx,sy+18,5,5)}g.fillStyle='#22262c';for(const rx of [8,24]){const a=gt*8*d;g.fillRect(sx+rx-1+Math.cos(a)*3,sy+17+Math.sin(a)*3,2,2)}return}
+  if(k==='|'){g.fillStyle='rgba(10,8,6,.55)';g.fillRect(sx,sy,T,T);g.fillStyle='#4a4f58';for(let i=0;i<4;i++)g.fillRect(sx+3+i*8,sy,4,T);g.fillStyle='#6a707a';for(let i=0;i<4;i++)g.fillRect(sx+3+i*8,sy,1.5,T);g.fillStyle='#3a3f48';g.fillRect(sx,sy+10,T,4);
+    if(tileAt(x,y+1)!==1||!lvl.k.get((y+1)*lvl.w+x)){g.fillStyle='#4a4f58';for(let i=0;i<4;i++)tri(g,sx+3+i*8,sy+T-2,sx+5+i*8,sy+T+4,sx+7+i*8,sy+T-2)}
+    const lt=lvl.gateT&&Object.keys(lvl.gateT).some(c=>lvl.gateT[c]>0);if(lt){}return}}
+function drawGadgets(g){if(!lvl.levers)return;
+  for(const g0 of lvl.gates){if(!g0.open)continue;const sx=g0.tx*T-camX,sy=g0.ty*T-camY;if(sx<-T||sx>W)continue;const t=lvl.gateT[g0.ch]||0;
+    const top=!lvl.gates.some(o=>o.tx===g0.tx&&o.ty===g0.ty-1);if(top){g.fillStyle='#4a4f58';for(let i=0;i<4;i++)g.fillRect(sx+3+i*8,sy,4,7);g.fillStyle='#3a3f48';g.fillRect(sx,sy+5,T,3)}
+    if(t<2.2&&Math.floor(gt*8)%2){g.fillStyle='rgba(255,90,60,.25)';g.fillRect(sx,sy,T,T)}}
+  for(const L of lvl.levers){const x=L.x-camX,y=L.y-camY;if(x<-60||x>W+60)continue;const on=(lvl.gateT[L.ch]||0)>0;
+    g.fillStyle='#5a3418';rr(g,x-12,y-10,24,10,3);g.fill();g.fillStyle='#3a2414';g.fillRect(x-12,y-3,24,3);
+    const a=on?.7:-.7;g.save();g.translate(x,y-8);g.rotate(a);g.strokeStyle='#8a8f98';g.lineWidth=4;g.beginPath();g.moveTo(0,0);g.lineTo(0,-30);g.stroke();g.fillStyle=on?'#3fdc4a':'#e83a2a';ell(g,0,-32,6,6);g.fillStyle='rgba(255,255,255,.6)';ell(g,-2,-34,2,2);g.restore();
+    if(!on&&P&&Math.abs(P.x-L.x)<300&&!L.used)txt(g,'Pull the lever!',x,y-52,14,'#ffe9c4','center',null,3)}
+  for(const j of lvl.jets){const x=j.x-camX,y=j.y-camY;if(x<-40||x>W+40)continue;
+    g.fillStyle='#2a2a30';rr(g,x-12,y-8,24,8,2);g.fill();g.fillStyle='#4a4a52';g.fillRect(x-8,y-12,16,5);g.fillStyle=j.warn||j.on?'#ff7a1a':'#1a1a1e';g.fillRect(x-5,y-13,10,3);
+    if(j.on){const fl=Math.sin(gt*40)*3;for(let k=0;k<3;k++){const w=[13,9,5][k],h=[104,86,60][k]+fl;const col=['rgba(255,90,20,.85)','rgba(255,170,40,.9)','rgba(255,240,170,.95)'][k];g.fillStyle=col;g.beginPath();g.moveTo(x-w,y-12);g.quadraticCurveTo(x-w*1.2,y-12-h*.5,x,y-12-h);g.quadraticCurveTo(x+w*1.2,y-12-h*.5,x+w,y-12);g.fill()}if(Math.random()<.5)part({x:x+camX+rand(-6,6),y:y+camY-60-rand(0,40),vx:rand(-30,30),vy:rand(-120,-60),life:.4,max:.4,col:'#ffb347',size:2})}}
+  for(const ic of lvl.icicles){if(ic.state==='gone')continue;const x=ic.x-camX+(ic.state==='shake'?rand(-1.5,1.5):0),y=ic.y-camY;if(x<-30||x>W+30)continue;const s=ic.grow==null?1:ic.grow;
+    g.fillStyle='rgba(200,240,255,.95)';tri(g,x-8*s,y,x+8*s,y,x,y+30*s);g.fillStyle='rgba(255,255,255,.85)';tri(g,x-4*s,y,x,y,x-1,y+20*s);g.strokeStyle='rgba(120,190,230,.9)';g.lineWidth=1;g.beginPath();g.moveTo(x-8*s,y);g.lineTo(x,y+30*s);g.lineTo(x+8*s,y);g.stroke()}
+  let gmax=0;for(const ch in lvl.gateT)gmax=Math.max(gmax,lvl.gateT[ch]);
+  if(gmax>0&&lvl.gates.some(g0=>g0.open&&Math.abs(g0.tx*T-camX-W/2)<W))txt(g,'Gate closes in '+Math.ceil(gmax),W/2,120,22,gmax<2.5?'#ff8a7a':'#ffd94a','center',null,4)}
+
+/* ---- whole-level boulder chase ---- */
+function rollerGround(R){const c0=Math.floor((R.x-R.r*.5)/T),c1=Math.floor((R.x+R.r*.5)/T),by=R.y+R.r;let best=null;
+  for(let cx=c0;cx<=c1;cx++)for(let ty=2;ty<lvl.h;ty++){if(tileAt(cx,ty)===1&&tileAt(cx,ty-1)!==1){const top=ty*T;if(top<by-4.2*T)continue;if(best===null||top<best)best=top;break}}
+  return best}
+function updateRoller(dt){const R=lvl.roller;if(!R||!P)return;
+  if(R.gone)return;
+  if(P.dead)return;
+  if(R.wait>0){R.wait-=dt;if(R.wait<=0){banner={txt:R.snow?'AVALANCHE! RUN!':'RUN!',t:1.6};SFX.boom();shake=10;R.vx=60}return}
+  const stopX=arena.x-18*T;
+  if(R.x>stopX){R.gone=true;shake=14;SFX.boom();for(let i=0;i<26;i++)part({type:'debris',x:R.x+rand(-30,30),y:R.y+rand(-30,30),vx:rand(-320,320),vy:rand(-560,-120),g:1300,life:1.3,max:1.3,col:R.snow?(i%2?'#ffffff':'#cfe0ee'):(i%2?'#7a6a5a':'#5a4a3a'),size:rand(5,11),rot:Math.random()*6,vr:rand(-9,9)});banner={txt:'Phew! You made it!',t:2};return}
+  const px=P.x+P.w/2,dist=px-R.x;let spd=R.snow?(EZ()?132:156):(EZ()?145:170);if(dist>560)spd+=(dist-560)*.9;spd=Math.min(spd,430);
+  R.vx+=clamp(spd-R.vx,-320*dt,320*dt);R.x+=R.vx*dt;R.rot+=R.vx/R.r*dt;
+  const gy=rollerGround(R);if(gy!==null)R.gy=gy;if(R.gy!=null){const ty=R.gy-R.r;R.y+=(ty-R.y)*Math.min(1,dt*9)}
+  shake=Math.max(shake,dist<300?3:1.5);if(Math.random()<.6)smoke(R.x-R.r*.6,R.y+R.r-4,1,R.snow?'rgba(255,255,255,.7)':'rgba(200,180,150,.5)');
+  if(Math.floor(gt*3)!==Math.floor((gt-dt)*3)&&dist<700)tone(55+Math.random()*20,.3,'sawtooth',.035,-10);
+  const box={x:R.x-R.r+8,y:R.y-R.r+8,w:R.r*2-16,h:R.r*2-8};
+  if(ov(P,box)&&P.invuln<=0){hurtPlayer(EZ()?25:35,1);if(!P.dead){P.vx=440;P.vy=-420;P.launched=true;P.x=Math.max(P.x,R.x+R.r-6)}}
+  for(const e of enemies)if(!e.dead&&ov(e,box))killEnemy(e,1);
+  for(const c of crates)if(!c.dead&&ov(c,box))breakCrate(c);
+  for(const br of barrels)if(!br.dead&&!br.carried&&br.fuse<0&&ov(br,box))br.fuse=.05}
+function drawRoller(g){const R=lvl.roller;if(!R||R.gone)return;const x=R.x-camX;
+  if(x>-R.r-10&&x<W+R.r)drawBoulder(g,R,R.snow?'snow':lvl.def.theme);
+  else if(x<=-R.r-10&&R.wait<=0){const d=Math.max(0,Math.round((P.x-R.x)/T));const yy=150;const pul=.6+.4*Math.sin(gt*8);g.globalAlpha=pul;g.fillStyle='#ff5a4a';tri(g,8,yy,26,yy-14,26,yy+14);g.globalAlpha=1;txt(g,(R.snow?'Snowball ':'Boulder ')+d+'m',32,yy+6,14,'#ffd0c8','left',null,3)}}
 
 /* ---- gone fishing: the crew is hungry ---- */
 const FDK=196,FSURF=236,FBED=436;let FS=null;
@@ -3552,7 +3656,7 @@ function frame(now){
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
-window.__G={get state(){return state},set state(v){state=v},get P(){return P},get lvl(){return lvl},get boss(){return boss},get enemies(){return enemies},get arena(){return arena},get plats(){return plats},get springs(){return springs},startKraken,get KR(){return KR},set krakenSafe(v){krakenSafe=v},get mapPos(){return mapPos},storyStart,get comic(){return comic},get carts(){return carts},get mounts(){return mounts},get vents(){return vents},goBMap,get bSel(){return bSel},get BTL(){return BTL},startBattle,recordScore,set score(v){score=v},EZ,get ropes(){return ropes},get zips(){return zips},get cannons(){return cannons},get boulder(){return boulder},get mapSel(){return mapSel},goMap,levelComplete,get lvlStats(){return lvlStats},get cages(){return cages},save:()=>save,get pickups(){return pickups},startLevel,keys,pressed,CH,LEVELS,get score(){return score},dblCount,togglePlague,plagueCured,get enemies(){return enemies},get pickups(){return pickups},get RUSH(){return RUSH},get TR(){return TR},startRush,startTrial,goChal,get lvlStats(){return lvlStats},STM,startSeaEvent,startDolphin,startFishing,get FS(){return FS},startBoard,get DL(){return DL},get BD(){return BD},get pBul(){return pBul},set lvlIdx(v){lvlIdx=v},goSMap,startStormCS,get STORMCS(){return STORMCS},get sPos(){return sPos},NET,get P2(){return P2},P2in,netSnap};
+window.__G={get state(){return state},set state(v){state=v},get P(){return P},get lvl(){return lvl},get boss(){return boss},get enemies(){return enemies},get arena(){return arena},get plats(){return plats},get springs(){return springs},startKraken,get KR(){return KR},set krakenSafe(v){krakenSafe=v},get mapPos(){return mapPos},storyStart,get comic(){return comic},get carts(){return carts},get mounts(){return mounts},get vents(){return vents},goBMap,get bSel(){return bSel},get BTL(){return BTL},startBattle,recordScore,set score(v){score=v},EZ,get ropes(){return ropes},get zips(){return zips},get cannons(){return cannons},get boulder(){return boulder},get mapSel(){return mapSel},goMap,levelComplete,get lvlStats(){return lvlStats},get cages(){return cages},save:()=>save,get pickups(){return pickups},startLevel,keys,pressed,CH,LEVELS,get score(){return score},dblCount,togglePlague,plagueCured,get enemies(){return enemies},get pickups(){return pickups},get RUSH(){return RUSH},get TR(){return TR},startRush,startTrial,goChal,get lvlStats(){return lvlStats},STM,startSeaEvent,startDolphin,startFishing,get FS(){return FS},startBoard,get DL(){return DL},get BD(){return BD},get pBul(){return pBul},tileAt,set lvlIdx(v){lvlIdx=v},goSMap,startStormCS,get STORMCS(){return STORMCS},get sPos(){return sPos},NET,get P2(){return P2},P2in,netSnap};
 </script>
 </body>
 </html>
